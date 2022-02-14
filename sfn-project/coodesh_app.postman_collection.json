@@ -1,0 +1,659 @@
+{
+	"info": {
+		"_postman_id": "696898e5-1df3-4c72-81b0-eac264082227",
+		"name": "coodesh_app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "remote",
+			"item": [
+				{
+					"name": "heroku",
+					"item": [
+						{
+							"name": "/",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://sfn-project.herokuapp.com",
+									"protocol": "http",
+									"host": [
+										"sfn-project",
+										"herokuapp",
+										"com"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "articles/",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"page\": 5}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://sfn-project.herokuapp.com/articles/",
+									"protocol": "http",
+									"host": [
+										"sfn-project",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"articles",
+										""
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "articles/",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"title\": \"hello world EC2!!\", \"summary\": \"summary EC2...\", \"featured\": true, \"launche_provider\": \"NOT_EMPTY\", \"event_provider\": \"[]]?\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://sfn-project.herokuapp.com/articles/",
+									"protocol": "http",
+									"host": [
+										"sfn-project",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"articles",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "articles/:id/",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://sfn-project.herokuapp.com/articles/:id/",
+									"protocol": "http",
+									"host": [
+										"sfn-project",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"articles",
+										":id",
+										""
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "200"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "articles/:id/",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"title\": \"EC2 TITLE\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://sfn-project.herokuapp.com/articles/:id/",
+									"protocol": "http",
+									"host": [
+										"sfn-project",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"articles",
+										":id",
+										""
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "404"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "articles/:id/",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://sfn-project.herokuapp.com/articles/:id/",
+									"protocol": "http",
+									"host": [
+										"sfn-project",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"articles",
+										":id",
+										""
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "200"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "aws",
+					"item": [
+						{
+							"name": "/",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://ec2-3-133-79-232.us-east-2.compute.amazonaws.com",
+									"protocol": "http",
+									"host": [
+										"ec2-3-133-79-232",
+										"us-east-2",
+										"compute",
+										"amazonaws",
+										"com"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "articles/",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"page\": 5}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://127.0.0.1:8000/articles/",
+									"protocol": "http",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "8000",
+									"path": [
+										"articles",
+										""
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1",
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "articles/",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"title\": \"hello world EC2!!\", \"summary\": \"summary EC2...\", \"featured\": true, \"launche_provider\": \"NOT_EMPTY\", \"event_provider\": \"[]]?\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://ec2-3-133-79-232.us-east-2.compute.amazonaws.com/articles/",
+									"protocol": "http",
+									"host": [
+										"ec2-3-133-79-232",
+										"us-east-2",
+										"compute",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"articles",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "articles/:id/",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://ec2-3-133-79-232.us-east-2.compute.amazonaws.com/articles/:id/",
+									"protocol": "http",
+									"host": [
+										"ec2-3-133-79-232",
+										"us-east-2",
+										"compute",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"articles",
+										":id",
+										""
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "404"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "articles/:id/",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"title\": \"EC2 TITLE\"}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://ec2-3-133-79-232.us-east-2.compute.amazonaws.com/articles/:id/",
+									"protocol": "http",
+									"host": [
+										"ec2-3-133-79-232",
+										"us-east-2",
+										"compute",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"articles",
+										":id",
+										""
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "articles/:id/",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://ec2-3-133-79-232.us-east-2.compute.amazonaws.com/articles/:id/",
+									"protocol": "http",
+									"host": [
+										"ec2-3-133-79-232",
+										"us-east-2",
+										"compute",
+										"amazonaws",
+										"com"
+									],
+									"path": [
+										"articles",
+										":id",
+										""
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "200"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "localhost",
+			"item": [
+				{
+					"name": "/",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://ec2-3-133-79-232.us-east-2.compute.amazonaws.com/",
+							"protocol": "http",
+							"host": [
+								"ec2-3-133-79-232",
+								"us-east-2",
+								"compute",
+								"amazonaws",
+								"com"
+							],
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "articles/:id/",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/articles/:id/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"articles",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "500"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "articles/:id",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"title\": \"lllll\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/articles/:id/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"articles",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "500"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "articles/:id/",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/articles/:id/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"articles",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "500"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "articles",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"title\": \"hello world!!\", \"summary\": \"summary ...\", \"featured\": false, \"launche_provider\": \"NOT_EMPTY\", \"event_provider\": \"??\"}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/articles/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"articles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "articles",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"page\": 5}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/articles/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"articles",
+								""
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

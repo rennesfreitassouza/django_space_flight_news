@@ -127,3 +127,28 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# .bak.py files
+*.bak.py
+
+# .html.py files
+#*.bak.html
+
+
+# .http
+*.http
+
+# static folder
+static/
+
+# migrations folder
+# migrations/
+
+# scripts folder
+# scripts/
+
+# .csv files
+*.csv
+
+# .cfg files
+configEmailAlarm.cfg
