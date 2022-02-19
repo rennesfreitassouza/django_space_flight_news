@@ -26,7 +26,7 @@ def get_article_by_my_id(my_id):
     try:
         space_flight_a = SFNArticles.objects.get(my_id=my_id)
     except SFNArticles.DoesNotExist:
-        retorno = {'Error': 'Record does not exist'}
+        retorno = {'ERROR': 'RECORD DOES NOT EXIST'}
     else:
         retorno = SFNArticlesSerializer(
         ).format_article_data(space_flight_a)

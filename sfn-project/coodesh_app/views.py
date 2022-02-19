@@ -39,7 +39,7 @@ def get_article(request, *args, **kwargs):
         if 'my_id' in kwargs.keys():
             response = get_article_by_my_id(kwargs['my_id'])
         else:
-            response = {'Error': 'Invalid Id'}
+            response = {'ERROR': 'INVALID ID'}
 
         return Response(response)
     elif request.method == 'PUT':

@@ -3,6 +3,10 @@ from rest_framework import serializers
 from coodesh_app.models import SFNArticles,  SFNArticlesLaunches, SFNArticlesEvents
 
 
+'''
+    "In general, serializing means to convert an object into fomrat like JSON, YAML or XML."
+'''
+
 class SFNArticlesSerializer(serializers.ModelSerializer):
     class Meta:
         model = SFNArticles

@@ -8,6 +8,7 @@
 - [Linguagem Python](https://www.python.org/)
 - [Framework Django](https://docs.djangoproject.com/en/4.0/)
 - [Django REST framework](https://www.django-rest-framework.org/)
+- [Cookiecutter](https://github.com/audreyfeldroy/cookiecutter-pypackage) para reestruturar o projeto Django. [Sobre](https://www.youtube.com/watch?v=RVLzZc3GUrk) esse módulo.
 - Serviços de computação em nuvem: [Heroku](https://heroku.com) e [Amazon EC2](https://aws.amazon.com/ec2/)
 - [Heroku Advanced Scheduler](https://devcenter.heroku.com/articles/advanced-scheduler)
 - [Heroku Postgres](https://devcenter.heroku.com/categories/heroku-postgres)
@@ -25,7 +26,7 @@
 
 ```.env
 DEBUG=False 
-SECRET_KEY=
+SECRET_KEY=from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())
 HOST=endereço do banco de dados
 DATABASE=nome do banco de dados que será acessado
 USER=usuário para acesso ao banco de dados
