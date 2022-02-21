@@ -71,6 +71,7 @@ RECEIVER_EMAIL = username@gmail.com
 `[GET]/articles/` - aceita requisições GET que contenham um HTTP Body Content com um JSON no formato {"page": 6}. Os objetos obtidos do banco de dados foram divididos em partes com até 10 itens cada, para não sobrecarregar a requisição.
 
 `[POST]/articles/` adiciona um novo artigo. O formato dos dados envio dos dados pode uma requisição HTTP POST sem Body Content ou com um Body Content no seguinte formato:
+```
 {
     "api_id": 0,
     "title": "EMPTY",
@@ -88,6 +89,7 @@ RECEIVER_EMAIL = username@gmail.com
 	"article_launche_id": "EMPTY",
 	"provider": "EMPTY"
 }
+```
 
 `[GET]/articles/:id/` retorna um JSON com os dados atuais do registro de um article com a chave primária igual ao id na url, ou um JSON com uma mensagem de erro.
 `[PUT]/articles/:id/` Atualiza um article baseado no id da requisição e retorna os dados já atualizados, ou retorna um JSON informando que o registro não existe.

@@ -1,11 +1,14 @@
-from codecs import lookup
-from rest_framework.generics import RetrieveUpdateDestroyAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListAPIView, CreateAPIView
 from coodesh_app.serializers import SFNArticlesSerializer
-from coodesh_app.models import SFNArticles
+from coodesh_app.models import SFNArticles, Tmy_id
 from rest_framework.renderers import JSONRenderer
 from datetime import datetime
 from pytz import UTC
 from coodesh_app.management.commands.load_api_data import DATETIME_FORMAT
+from rest_framework.pagination import LimitOffsetPagination
+from django.http import HttpRequest
+from rest_framework.response import Response
+from django.shortcuts import render
 
 
 class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
@@ -74,3 +77,59 @@ class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
 
         sfn_article.featured = data.get('featured', sfn_article.featured)
         return sfn_article
+
+
+class SFNArticlesRetrieveUpdateDestroy_(RetrieveUpdateDestroyAPIView):
+    queryset = SFNArticles.objects.all()
+    lookup_field = 'my_id'
+    serializer_class = SFNArticlesSerializer
+
+    def update(self, request, *args, **kwargs):
+        response = super().update(request, *args, **kwargs)
+
+        if response.status_code == 200:
+            from django.core.cache import cache
+
+            article = response.data
+            cache.set('article_data_{}'.format(article['my_id']), {
+                'my_id': article['my_id'],
+                'api_id': article['api_id'],
+                'title': article['title'],
+                'url': article['url'],
+                'imageUrl': article['imageUrl'],
+                'newsSite': article['newsSite'],
+                'summary': article['summary'],
+                'updatedAt': article['updatedAt'],
+                'publishedAt': article['publishedAt'],
+                'featured': article['featured'],
+            })
+        return response
+
+
+class SFNArticlesPagination(LimitOffsetPagination):
+    default_limit = 20
+    max_limit = 100
+
+
+class SFNArticlesList(ListAPIView, CreateAPIView):
+    queryset = SFNArticles.objects.all()
+    serializer_class = SFNArticlesSerializer
+    pagination_class = SFNArticlesPagination
+
+    def create(self, request, *args, **kwargs):
+        
+        last_id = Tmy_id().get_last_my_id()
+        
+        new_request = self.copy_query_dict(request, last_id)
+        
+        # response =  super().create(new_request, *args, **kwargs)
+        response = CreateAPIView.create(self, new_request, *args, **kwargs)
+        
+        return response
+
+    def copy_query_dict(self, request, last_id):
+
+        temp_query_dict = request.data.copy()
+        temp_query_dict['my_id'] = last_id
+
+        return Response(data=temp_query_dict)

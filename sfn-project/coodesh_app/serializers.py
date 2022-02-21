@@ -4,14 +4,28 @@ from coodesh_app.models import SFNArticles,  SFNArticlesLaunches, SFNArticlesEve
 
 
 '''
-    "In general, serializing means to convert an object into fomrat like JSON, YAML or XML."
+    "In general, serializing means to convert an object into format like JSON, YAML or XML."
 '''
 
 class SFNArticlesSerializer(serializers.ModelSerializer):
+    my_id = serializers.IntegerField(read_only=True)
+    api_id = serializers.IntegerField(read_only=False)
+    title = serializers.CharField(min_length=2, max_length=255)
+    url = serializers.CharField(read_only=False)
+    imageUrl = serializers.CharField(read_only=False)
+    newsSite = serializers.CharField(read_only=False)
+    summary = serializers.CharField(read_only=False)
+    updatedAt = serializers.DateTimeField(read_only=False)
+    publishedAt = serializers.DateTimeField(read_only=False)
+    featured = serializers.BooleanField(read_only=False)
+    #test = serializers.CharField(read_only=False, source='summary')
+    """ The  SerializerMethodField will by default call the method get_'field name'()"""
+    articleslaunches = serializers.SerializerMethodField()
+    articlesevents = serializers.SerializerMethodField()
+    
     class Meta:
         model = SFNArticles
-        fields = ('api_id', 'title', 'url', 'imageUrl', 'newsSite',
-                  'summary', 'updatedAt', 'publishedAt', 'publishedAt', 'featured')
+        fields = ('my_id', 'api_id', 'title', 'url', 'imageUrl', 'newsSite', 'summary', 'updatedAt', 'publishedAt', 'publishedAt', 'featured', 'articleslaunches', 'articlesevents') #'test' )
 
     def format_article_data(self, sfn_data):
 
@@ -26,11 +40,20 @@ class SFNArticlesSerializer(serializers.ModelSerializer):
 
         return r
 
+    def get_articleslaunches(self, instance):
+        article_launches = SFNArticlesLaunches.objects.filter(sfnarticles=instance)
+        return SFNArticlesLaunchesSerializer(article_launches, many=True).data
+        
+
+    def get_articlesevents(self, instance):
+        article_events = SFNArticlesEvents.objects.filter(sfnarticles=instance)
+        return SFNArticlesEventsSerializer(article_events, many=True).data
+
 
 class SFNArticlesLaunchesSerializer(serializers.ModelSerializer):
     class Meta:
-        Model = SFNArticlesLaunches
-        fields = ('article_launche_id', 'provider')
+        model = SFNArticlesLaunches
+        fields = ('sfnarticles', 'article_launche_id', 'provider')
 
     def get_article_lauches(self, sfn_article):
         retorno = {'lauches': []}
@@ -44,8 +67,8 @@ class SFNArticlesLaunchesSerializer(serializers.ModelSerializer):
 
 class SFNArticlesEventsSerializer(serializers.ModelSerializer):
     class Meta:
-        Model = SFNArticlesEvents
-        fields = ('article_event_id', 'provider')
+        model = SFNArticlesEvents
+        fields = ('sfnarticles', 'article_event_id', 'provider')
 
     def get_article_events(self, sfn_article):
         retorno = {'events': []}
