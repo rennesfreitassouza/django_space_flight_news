@@ -1,6 +1,6 @@
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListAPIView, CreateAPIView
-from coodesh_app.serializers import SFNArticlesSerializer
-from coodesh_app.models import SFNArticles, Tmy_id
+from coodesh_app.serializers import SFNArticlesSerializer, SFNArticlesLaunchesSerializer
+from coodesh_app.models import SFNArticles, Tmy_id, SFNArticlesLaunches
 from rest_framework.renderers import JSONRenderer
 from datetime import datetime
 from pytz import UTC
@@ -9,6 +9,10 @@ from rest_framework.pagination import LimitOffsetPagination
 from django.http import HttpRequest
 from rest_framework.response import Response
 from django.shortcuts import render
+from django.http import QueryDict
+from django.core.paginator import Paginator
+from django.conf import settings
+from rest_framework.pagination import _positive_int
 
 
 class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
@@ -85,11 +89,14 @@ class SFNArticlesRetrieveUpdateDestroy_(RetrieveUpdateDestroyAPIView):
     serializer_class = SFNArticlesSerializer
 
     def update(self, request, *args, **kwargs):
+        """THE GET REQUEST MUST BE REDONE TO VIEW THE articleslaunches FIELD UPDATED."""
+        
+
         response = super().update(request, *args, **kwargs)
 
         if response.status_code == 200:
             from django.core.cache import cache
-
+            
             article = response.data
             cache.set('article_data_{}'.format(article['my_id']), {
                 'my_id': article['my_id'],
@@ -102,34 +109,172 @@ class SFNArticlesRetrieveUpdateDestroy_(RetrieveUpdateDestroyAPIView):
                 'updatedAt': article['updatedAt'],
                 'publishedAt': article['publishedAt'],
                 'featured': article['featured'],
+                'articleslaunches': article['articleslaunches'],
+                'articlesevents': article['articlesevents']    
             })
+            print("request.data", request.data)
+            if isinstance(request.data, dict):
+                dict_request = request.data
+            else:    
+                dict_request = request.data.dict()
+            
+            self.save_or_update_launches(article['my_id'], dict_request['article_launche_id'], dict_request['article_launche_id_provider'])
+
+
         return response
+
+    def save_or_update_launches(self, my_id, article_launche_id, article_launche_id_provider):
+        article = SFNArticles.objects.get(my_id=my_id)
+
+        article_launches = SFNArticlesLaunches()
+        article_launches.sfnarticles = article
+        article_launches.article_launche_id = article_launche_id
+        article_launches.provider = article_launche_id_provider
+        
+        article_launches.save()
+
+
+class SFNArticlesLaunchesList(CreateAPIView):
+    queryset = SFNArticlesLaunches.objects.all()
+    serializer_class = SFNArticlesLaunchesSerializer
+
+
+    def create2(self, request, last_id):
+        #response = CreateAPIView.create(self, request)
+        
+        id_ret = Tmy_id().get_latest_my_id() - 1
+        
+        new_request = self.copy_query_dict(request, last_id)
+
+        
+        
+        dict_new_request = new_request.dict()
+        
+        if dict_new_request['my_id'] == id_ret:
+            article = SFNArticles.objects.get(my_id=last_id)
+
+            SFNArticlesLaunches.objects.create(
+                sfnarticles=article,
+                article_launche_id=dict_new_request['article_launche_id'],provider=dict_new_request['article_launche_id_provider'])
+
+    def copy_query_dict(self, request, last_id):
+        new_query_dict = QueryDict(mutable=True)
+        temp_query_dict = request.data.copy()
+
+        new_query_dict['my_id'] = last_id
+        new_query_dict['article_launche_id'] = temp_query_dict.get('article_launche_id')
+        new_query_dict['article_launche_id_provider'] = temp_query_dict.get('article_launche_id_provider')
+
+
+        return new_query_dict
 
 
 class SFNArticlesPagination(LimitOffsetPagination):
+    """SFNArticlesPagination inherits rest_framework LimitOffsetPagination class and overrides its paginate_queryset and get_offset methods.
+
+    Attrs:
+        default_limit: default_limit indicates the maximum number of items to return
+        max_limit: max_limit indicates the maximum number of items to return
+        my_offset: my_offset indicates the starting position of the query in relation to the complete set of unpaginated items.
+
+    """
+
     default_limit = 20
     max_limit = 100
+    my_offset = 0
 
+    @classmethod
+    def set_default_limit(cls, value=None):
+        if not value is None:        
+            cls.default_limit = int(value)
+        else:
+            cls.default_limit = 20
+
+
+    @classmethod
+    def set_my_offset(cls, value=None):
+        if not value is None:        
+            cls.my_offset = int(value)
+        else:
+            cls.my_offset = 0
+
+    def paginate_queryset(self, queryset, request, view=None):
+        self.limit = self.get_limit(request)
+        if self.limit is None:
+            return None
+
+        self.count = self.get_count(queryset)
+        self.offset = self.get_offset(request)
+        self.request = request
+        if self.count > self.limit and self.template is not None:
+            self.display_page_controls = True
+
+        if self.count == 0 or self.offset > self.count:
+            return []
+        return list(queryset[self.offset:self.offset + self.limit])
+
+
+    def get_offset(self, request):
+        try:
+            print("request.query_params", request.query_params)
+            print("request.query_params[self.offset_query_param]", request.query_params[self.offset_query_param], type(request.query_params[self.offset_query_param]))
+
+            return _positive_int(
+                request.query_params[self.offset_query_param],
+            )
+        except (KeyError, ValueError):
+            #self.set_my_offset()
+            return self.my_offset #
+    
 
 class SFNArticlesList(ListAPIView, CreateAPIView):
-    queryset = SFNArticles.objects.all()
+    queryset = SFNArticles.objects.all().order_by('my_id')
     serializer_class = SFNArticlesSerializer
     pagination_class = SFNArticlesPagination
 
-    def create(self, request, *args, **kwargs):
+    def get_queryset(self):
+        print("self.request.data", self.request.data )
+        print("self.request.query_params", self.request.query_params)
         
-        last_id = Tmy_id().get_last_my_id()
+        if not self.request.query_params :
+            self.pagination_class.set_my_offset()
+        if self.request.data:
+            
+            limit = self.request.data.get('limit', None)
+            self.pagination_class.set_default_limit(limit)
+            
+            my_offset = self.request.data.get('my_offset', None)
+            self.pagination_class.set_my_offset(my_offset)
+            
+        queryset = SFNArticles.objects.all().order_by('my_id')
+        
+        return queryset
+        
+
+    def create(self, request, *args, **kwargs):
+        last_id = Tmy_id().get_latest_my_id()
         
         new_request = self.copy_query_dict(request, last_id)
         
-        # response =  super().create(new_request, *args, **kwargs)
+        # response =  super().create(new_request, *args, **kwargs) or:
         response = CreateAPIView.create(self, new_request, *args, **kwargs)
-        
+ 
+        self.create_sfnarticleslaunche(request, last_id)
+
+
         return response
 
     def copy_query_dict(self, request, last_id):
 
         temp_query_dict = request.data.copy()
         temp_query_dict['my_id'] = last_id
-
+        temp_query_dict.pop('article_launche_id')
+        temp_query_dict.pop('article_launche_id_provider')
         return Response(data=temp_query_dict)
+    
+    def create_sfnarticleslaunche(self, request, last_id):
+        new_launche = SFNArticlesLaunchesList()
+        new_launche.create2(request, last_id)
+        
+
+

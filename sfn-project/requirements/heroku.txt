@@ -8,3 +8,4 @@ djangorestframework
 django_extensions
 pytz
 psycopg2-binary
+requests

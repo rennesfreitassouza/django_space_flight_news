@@ -46,17 +46,7 @@ USE_TZ = True
 
 # DATABASES
 # ------------------------------------------------------------------------------
-# https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
-DATABASES = {
-     'default': env.db(
-         "DATABASE_URL",
-         default="postgres:///sfn",
-     ),
-}
-# https://docs.djangoproject.com/en/4.0/ref/settings/#atomic-requests
-DATABASES["default"]["ATOMIC_REQUESTS"] = True
-DATABASES["OPTIONS"] = {'sslmode': 'require'}
 
 # https://docs.djangoproject.com/en/stable/ref/settings/#std:setting-DEFAULT_AUTO_FIELD
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
@@ -150,3 +140,4 @@ TEMPLATES = [
         },
     },
 ]
+

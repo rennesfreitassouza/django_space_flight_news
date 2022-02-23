@@ -5,20 +5,21 @@ from django.db.models import BigAutoField
 
 class Tmy_id:
 
-    def get_last_my_id(self):
+    def get_latest_my_id(self):
         try:
-            record = SFNArticles.objects.all().order_by('my_id').last()
-        except:
-            response = {'ERROR': 'ERROR TO GET RECORD'}
-            raise response
+            record = SFNArticles.objects.all().latest('my_id') 
+        except SFNArticles.DoesNotExist:
+            response = {'ERROR': 'RECORD DOES NOT EXIST'}
+            print(response)
+            response = 0
         else:
             response = record.my_id + 1
 
-        return response           
+        return response
 
 
 class SFNArticles(models.Model):
-    my_id = models.BigIntegerField(primary_key=True, default=Tmy_id().get_last_my_id)
+    my_id = models.BigIntegerField(primary_key=True, default=Tmy_id().get_latest_my_id)
     api_id = models.IntegerField(unique=False)
     title = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
