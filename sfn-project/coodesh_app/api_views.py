@@ -14,7 +14,8 @@ from django.core.paginator import Paginator
 from django.conf import settings
 from rest_framework.pagination import _positive_int
 
-
+# articles/
+# articles/:my_id/
 class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = SFNArticles.objects
     lookup_field = 'my_id'
@@ -82,7 +83,7 @@ class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
         sfn_article.featured = data.get('featured', sfn_article.featured)
         return sfn_article
 
-
+# test_articles/:my_id/
 class SFNArticlesRetrieveUpdateDestroy_(RetrieveUpdateDestroyAPIView):
     queryset = SFNArticles.objects.all()
     lookup_field = 'my_id'
@@ -133,8 +134,8 @@ class SFNArticlesRetrieveUpdateDestroy_(RetrieveUpdateDestroyAPIView):
         
         article_launches.save()
 
-
-class SFNArticlesLaunchesList(CreateAPIView):
+# test_articles/
+class SFNArticlesLaunchesList():
     queryset = SFNArticlesLaunches.objects.all()
     serializer_class = SFNArticlesLaunchesSerializer
 
@@ -226,7 +227,7 @@ class SFNArticlesPagination(LimitOffsetPagination):
             #self.set_my_offset()
             return self.my_offset #
     
-
+# test_articles/
 class SFNArticlesList(ListAPIView, CreateAPIView):
     queryset = SFNArticles.objects.all().order_by('my_id')
     serializer_class = SFNArticlesSerializer

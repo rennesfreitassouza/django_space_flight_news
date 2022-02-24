@@ -23,7 +23,13 @@ class SFNArticlesSerializer(serializers.ModelSerializer):
                                         help_text=f'Format: {DATETIME_FORMAT}',
                                         style={'input_type': 'text', 'placeholder': '2022-02-21T16:34:59'},
                                         read_only=False)
-    publishedAt = serializers.DateTimeField(read_only=False)
+    publishedAt = serializers.DateTimeField(
+    input_formats=[DATETIME_FORMAT],
+                                        format=DATETIME_FORMAT,
+                                        allow_null=True,
+                                        help_text=f'Format: {DATETIME_FORMAT}',
+                                        style={'input_type': 'text', 'placeholder': '2022-02-21T16:34:59'},
+                                        read_only=False)
     featured = serializers.BooleanField(read_only=False)
 
     #test = serializers.CharField(read_only=False, source='summary')

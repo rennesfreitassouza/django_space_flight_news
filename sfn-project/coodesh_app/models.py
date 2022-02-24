@@ -9,12 +9,13 @@ class Tmy_id:
         try:
             record = SFNArticles.objects.all().latest('my_id') 
         except SFNArticles.DoesNotExist:
-            response = {'ERROR': 'RECORD DOES NOT EXIST'}
-            print(response)
+            msg = {'ERROR': 'NO RECORD RETRIEVED'}
+            
             response = 0
         else:
+            msg = {'Ok': 'RECORD RETRIEVED'}
             response = record.my_id + 1
-
+        print(msg)
         return response
 
 

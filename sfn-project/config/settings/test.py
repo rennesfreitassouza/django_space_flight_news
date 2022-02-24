@@ -10,6 +10,7 @@ from .base import env
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 
 DEBUG = True
+
 SECRET_KEY = env(
     "DJANGO_SECRET_KEY",
     default="Vb6jizUfTtew3U8PKH4loVGzV474ZQStHYbYXMpjbhzDmaoAlLDOVNofjxplHkpC",
