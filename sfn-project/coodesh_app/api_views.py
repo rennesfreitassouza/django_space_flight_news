@@ -163,13 +163,13 @@ class SFNArticlesLaunchesList():
         temp_query_dict = request.data.copy()
 
         new_query_dict['my_id'] = last_id
-        new_query_dict['article_launche_id'] = temp_query_dict.get('article_launche_id')
-        new_query_dict['article_launche_id_provider'] = temp_query_dict.get('article_launche_id_provider')
+        new_query_dict['article_launche_id'] = temp_query_dict.get('article_launche_id', None)
+        new_query_dict['article_launche_id_provider'] = temp_query_dict.get('article_launche_id_provider', None)
 
 
         return new_query_dict
 
-
+# test_articles/
 class SFNArticlesPagination(LimitOffsetPagination):
     """SFNArticlesPagination inherits rest_framework LimitOffsetPagination class and overrides its paginate_queryset and get_offset methods.
 
@@ -255,24 +255,65 @@ class SFNArticlesList(ListAPIView, CreateAPIView):
     def create(self, request, *args, **kwargs):
         last_id = Tmy_id().get_latest_my_id()
         
-        new_request = self.copy_query_dict(request, last_id)
-        
+        new_request = self.remove_query_dict(request, last_id)
         # response =  super().create(new_request, *args, **kwargs) or:
         response = CreateAPIView.create(self, new_request, *args, **kwargs)
- 
-        self.create_sfnarticleslaunche(request, last_id)
 
+        new_request = self.add_and_copy_query_dict(request, last_id)
+        dict_new_request = new_request.data.copy()
+        if (not dict_new_request["article_launche_id"] is None
+            and not dict_new_request["article_launche_id_provider"] is None):
+                        
+            self.create_sfnarticleslaunche(request, last_id)
+        else:
+            print("article_launche_id is None")
+            print("article_launche_id_provider is None")
 
         return response
 
-    def copy_query_dict(self, request, last_id):
-
+    def add_and_copy_query_dict(self, request, last_id):
+        new_query_dict = QueryDict(mutable=True)
         temp_query_dict = request.data.copy()
-        temp_query_dict['my_id'] = last_id
-        temp_query_dict.pop('article_launche_id')
-        temp_query_dict.pop('article_launche_id_provider')
-        return Response(data=temp_query_dict)
-    
+        
+        new_query_dict = temp_query_dict
+        dict_new_request = new_query_dict.copy()
+
+        if (("article_launche_id" in dict_new_request.keys())
+            and ("article_launche_id_provider" in dict_new_request.keys())):
+            
+            if ((dict_new_request['article_launche_id'] == '')
+                and (dict_new_request['article_launche_id_provider'] == '')):
+                temp_query_dict.pop('article_launche_id')
+                temp_query_dict.pop('article_launche_id_provider')
+
+            new_query_dict['article_launche_id'] = temp_query_dict.get('article_launche_id', None)
+            new_query_dict['article_launche_id_provider'] = temp_query_dict.get('article_launche_id_provider', None)
+        else:
+            new_query_dict['article_launche_id'] = None
+            new_query_dict['article_launche_id_provider'] = None
+        new_query_dict['my_id'] = last_id
+
+        return Response(data=new_query_dict)
+
+    def remove_query_dict(self, request, last_id):
+        new_query_dict = QueryDict(mutable=True)
+        temp_query_dict = request.data.copy()
+        print("temp_query_dict", temp_query_dict)
+        new_query_dict = temp_query_dict.copy()
+        
+        dict_new_request = request.data.copy()
+        if (("article_launche_id" in dict_new_request.keys())
+            and ("article_launche_id_provider" in dict_new_request.keys())):
+            
+            print(f"BU REST_INTERFACE type >{new_query_dict['article_launche_id']}<", type(new_query_dict['article_launche_id']))
+            
+            new_query_dict.pop('article_launche_id')
+            new_query_dict.pop('article_launche_id_provider')
+        
+        new_query_dict['my_id'] = last_id
+
+        return Response(data=new_query_dict)
+
     def create_sfnarticleslaunche(self, request, last_id):
         new_launche = SFNArticlesLaunchesList()
         new_launche.create2(request, last_id)
