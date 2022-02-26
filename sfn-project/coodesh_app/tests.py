@@ -2,7 +2,6 @@ from django.test import TestCase
 from rest_framework.test import APITestCase
 from coodesh_app.models import SFNArticles, SFNArticlesLaunches
 import json
-import requests
 from datetime import datetime
 from coodesh_app.management.commands.load_api_data import DATETIME_FORMAT
 
