@@ -1,0 +1,7 @@
+[DEFAULT]
+USER = 
+PASS = 
+SMTP_SERVER = smtp.gmail.com
+SMTP_PORT = 465
+TIMEOUT = 10.0
+RECEIVER_EMAIL = 

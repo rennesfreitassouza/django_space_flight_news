@@ -1,11 +1,26 @@
 from django.db import models
 from django.db.utils import IntegrityError
-
+from django.db.models import BigAutoField
 # Create your models here.
+
+class Tmy_id:
+
+    def get_latest_my_id(self):
+        try:
+            record = SFNArticles.objects.all().latest('my_id') 
+        except SFNArticles.DoesNotExist:
+            msg = {'ERROR': 'NO RECORD RETRIEVED'}
+            
+            response = 0
+        else:
+            msg = {'Ok': 'RECORD RETRIEVED'}
+            response = record.my_id + 1
+        print(msg)
+        return response
 
 
 class SFNArticles(models.Model):
-    my_id = models.BigIntegerField(primary_key=True)
+    my_id = models.BigIntegerField(primary_key=True, default=Tmy_id().get_latest_my_id)
     api_id = models.IntegerField(unique=False)
     title = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
@@ -15,6 +30,8 @@ class SFNArticles(models.Model):
     updatedAt = models.DateTimeField()
     publishedAt = models.DateTimeField()
     featured = models.BooleanField()
+
+     
 
     def set_article_data_pk_1(self, article):
         saved = False
