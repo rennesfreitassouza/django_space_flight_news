@@ -113,12 +113,15 @@ RECEIVER_EMAIL = username@gmail.com
 ```
 
 `[GET]/articles/:id/` retorna um JSON com os dados atuais do registro de um article com a chave primária igual ao id na url, ou um JSON com uma mensagem de erro.
+
 `[GET]/test_articles/:id/` retorna um JSON com os dados atuais do registro de um article com a chave primária igual ao id na url, ou um JSON com uma mensagem de erro.
 
 `[PUT]/articles/:id/` Atualiza um article baseado no id da requisição e retorna os dados já atualizados, ou retorna um JSON informando que o registro não existe.
+
 `[PUT]/test_articles/:id/` Atualiza um article baseado no id da requisição. Uma nova requisição [GET] deve ser realizada para que os os dados atualizados do registro sejam retornados. Todos os dados do registro devem ser enviados na requisição.
 
 `[DELETE]/articles/:id/` remove um article baseado no id do endereço da requisição HTTP DELETE e retorna a representação para impressão daquele article. Caso o id não retorne nenhum objeto, uma string de erro é retornada.
+
 `[DELETE]/test_articles/:id/` remove um article baseado no id do endereço da requisição HTTP DELETE e retorna uma resposta HTTP sem conteúdo e com status code 204. Também retorna um JSON, em caso de erro.
 
 
