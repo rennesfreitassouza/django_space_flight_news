@@ -1,6 +1,6 @@
 ## Django sfn-project 2022
 
-[A primeira solução](http://sfn-project.herokuapp.com/) desenvolvida por mim para o desafio [🏅 2021 - Space Flight News](../README.md).
+[A 2a. solução](http://sfn-project.herokuapp.com/) desenvolvida por mim para o desafio [🏅 2021 - Space Flight News](../README.md).
 
 
 ### Tecnologias utilizadas
