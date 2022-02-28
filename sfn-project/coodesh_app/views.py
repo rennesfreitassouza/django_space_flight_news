@@ -9,13 +9,13 @@ from coodesh_app import api_views
 
 # Create your views here.
 @api_view(['GET'])
-@permission_classes([AllowAny])
+#@permission_classes([AllowAny])
 def home(request):
     return render(request, "coodesh_app/home.html")
 
 
 @api_view(['GET', 'POST'])
-@permission_classes([AllowAny])
+#@permission_classes([AllowAny])
 def gen_article_view(request):
     response = dict()
 
@@ -33,7 +33,7 @@ def gen_article_view(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes([AllowAny])
+#@permission_classes([AllowAny])
 def get_article(request, *args, **kwargs):
     if request.method == 'GET':
         if 'my_id' in kwargs.keys():

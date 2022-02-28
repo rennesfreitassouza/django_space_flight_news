@@ -1,18 +1,14 @@
 from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListAPIView, CreateAPIView
 from coodesh_app.serializers import SFNArticlesSerializer, SFNArticlesLaunchesSerializer
 from coodesh_app.models import SFNArticles, Tmy_id, SFNArticlesLaunches
-from rest_framework.renderers import JSONRenderer
 from datetime import datetime
 from pytz import UTC
 from coodesh_app.management.commands.load_api_data import DATETIME_FORMAT
 from rest_framework.pagination import LimitOffsetPagination
-from django.http import HttpRequest
 from rest_framework.response import Response
-from django.shortcuts import render
 from django.http import QueryDict
-from django.core.paginator import Paginator
-from django.conf import settings
 from rest_framework.pagination import _positive_int
+
 
 # articles/
 # articles/:my_id/
@@ -83,6 +79,7 @@ class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
         sfn_article.featured = data.get('featured', sfn_article.featured)
         return sfn_article
 
+
 # test_articles/:my_id/
 class SFNArticlesRetrieveUpdateDestroy_(RetrieveUpdateDestroyAPIView):
     queryset = SFNArticles.objects.all()
@@ -134,6 +131,7 @@ class SFNArticlesRetrieveUpdateDestroy_(RetrieveUpdateDestroyAPIView):
         
         article_launches.save()
 
+
 # test_articles/
 class SFNArticlesLaunchesList():
     queryset = SFNArticlesLaunches.objects.all()
@@ -168,6 +166,7 @@ class SFNArticlesLaunchesList():
 
 
         return new_query_dict
+
 
 # test_articles/
 class SFNArticlesPagination(LimitOffsetPagination):
@@ -226,7 +225,8 @@ class SFNArticlesPagination(LimitOffsetPagination):
         except (KeyError, ValueError):
             #self.set_my_offset()
             return self.my_offset #
-    
+
+
 # test_articles/
 class SFNArticlesList(ListAPIView, CreateAPIView):
     queryset = SFNArticles.objects.all().order_by('my_id')
@@ -251,7 +251,6 @@ class SFNArticlesList(ListAPIView, CreateAPIView):
         
         return queryset
         
-
     def create(self, request, *args, **kwargs):
         last_id = Tmy_id().get_latest_my_id()
         
@@ -317,6 +316,3 @@ class SFNArticlesList(ListAPIView, CreateAPIView):
     def create_sfnarticleslaunche(self, request, last_id):
         new_launche = SFNArticlesLaunchesList()
         new_launche.create2(request, last_id)
-        
-
-
