@@ -68,7 +68,9 @@ RECEIVER_EMAIL = username@gmail.com
 
 ### About the endpoints
 
-`[GET]/`<p>
+`[POST]api/token/` - retorna um JSON com dois campos. Um dos campos é um token refresh e o outro é um token de acesso. O token de acesso é uma string com valor codificado em Base64. Este valor correspondente a um token assinado que permite que uma tentativa de atenticação do tipo 'Bearer Token', com o valor retornado no JSON seja realizada com sucesso.
+
+`[POST]api/token/refresh/` - quando o token do campo access retornado pela rota <code>api/token/</code> da aplicação expirar, esta rota retorna um novo token de acesso caso o token refresh da mesma rota <code>api/token/</code> for enviado em uma requisição para esta rota.
 
 `[GET]/articles/` - aceita requisições GET que contenham um HTTP Body Content com um JSON no formato <code>{"page": 6}</code>. Os objetos obtidos do banco de dados foram divididos em partes com até 10 itens cada, para não sobrecarregar a requisição.
 

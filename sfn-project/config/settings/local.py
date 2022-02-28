@@ -1,6 +1,5 @@
 from .base import *  # noqa
 from .base import env
-from django.core.management.utils import get_random_secret_key
 
 
 # GENERAL
