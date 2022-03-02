@@ -1,20 +1,21 @@
 from .base import *  # noqa
-from .base import env
+from .base import env, local_env_dir
 from django.core.management.utils import get_random_secret_key
-
-
+print("local_env_dir", local_env_dir)
 # GENERAL
 # ------------------------------------------------------------------------------
 # # SECURITY WARNING: don't run with debug turned on in production!
-env.bool("DJANGO_DEBUG", False)
-
+DEBUG = env.bool("DJANGO_DEBUG", False)
+print("production.py DEBUG ", DEBUG)
 # https://docs.djangoproject.com/en/dev/ref/settings/#secret-key
 SECRET_KEY = env(
     "DJANGO_SECRET_KEY",
     default=get_random_secret_key(),
 )
+print("SECRET_KEY", SECRET_KEY)
 # https://docs.djangoproject.com/en/dev/ref/settings/#allowed-hosts
-ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=["domain_name_example.com"])
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS")
+print("ALLOWED_HOSTS", ALLOWED_HOSTS)
 
 # DATABASES
 # ------------------------------------------------------------------------------

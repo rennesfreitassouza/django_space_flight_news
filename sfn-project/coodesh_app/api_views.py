@@ -8,7 +8,9 @@ from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.response import Response
 from django.http import QueryDict
 from rest_framework.pagination import _positive_int
-
+from django.contrib.auth.mixins import LoginRequiredMixin
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 # articles/
 # articles/:my_id/
@@ -80,6 +82,7 @@ class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
         return sfn_article
 
 
+@permission_classes([IsAuthenticated])
 # test_articles/:my_id/
 class SFNArticlesRetrieveUpdateDestroy_(RetrieveUpdateDestroyAPIView):
     queryset = SFNArticles.objects.all()
@@ -133,7 +136,7 @@ class SFNArticlesRetrieveUpdateDestroy_(RetrieveUpdateDestroyAPIView):
 
 
 # test_articles/
-class SFNArticlesLaunchesList():
+class SFNArticlesLaunchesAux():
     queryset = SFNArticlesLaunches.objects.all()
     serializer_class = SFNArticlesLaunchesSerializer
 
@@ -226,13 +229,14 @@ class SFNArticlesPagination(LimitOffsetPagination):
             #self.set_my_offset()
             return self.my_offset #
 
-
+@permission_classes([IsAuthenticated])
 # test_articles/
 class SFNArticlesList(ListAPIView, CreateAPIView):
     queryset = SFNArticles.objects.all().order_by('my_id')
     serializer_class = SFNArticlesSerializer
     pagination_class = SFNArticlesPagination
 
+    
     def get_queryset(self):
         print("self.request.data", self.request.data )
         print("self.request.query_params", self.request.query_params)
@@ -314,5 +318,5 @@ class SFNArticlesList(ListAPIView, CreateAPIView):
         return Response(data=new_query_dict)
 
     def create_sfnarticleslaunche(self, request, last_id):
-        new_launche = SFNArticlesLaunchesList()
+        new_launche = SFNArticlesLaunchesAux()
         new_launche.create2(request, last_id)

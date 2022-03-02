@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view, permission_classes
 from coodesh_app.src.get_functions import get_page, get_article_by_my_id
 from coodesh_app.src.post_functions import create_new_article
 from coodesh_app import api_views
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
@@ -33,7 +34,7 @@ def gen_article_view(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-#@permission_classes([AllowAny])
+@permission_classes([AllowAny])
 def get_article(request, *args, **kwargs):
     if request.method == 'GET':
         if 'my_id' in kwargs.keys():
