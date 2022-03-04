@@ -1,4 +1,10 @@
 {% extends 'coodesh_app/base.html' %} 
 {% block 'body' %}
-<strong>Back-end Challenge 2021 🏅 - Space Flight News </strong> 
+<strong>Back-end Challenge 2021 🏅 - Space Flight News</strong></p>
+
+<a href="{% url 'api_token' %}">
+    <button type="submit" >
+        JWT_token
+    </button>
+</a>
 {% endblock %}

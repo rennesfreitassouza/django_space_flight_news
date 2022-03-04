@@ -53,7 +53,10 @@ RECEIVER_EMAIL = username@gmail.com
 - <strong>Atenção</strong>: executar o interpretador Python para iniciar a REST API com o Django no diretório que os arquivos <code>configEmailAlarm.cfg</code>, <code>ArticlesData.csv</code>, <code>EventsData.csv</code> e <code>LaunchesData.csv</code> estiverem armazenados.
 
 ### Useful commands 
-
+- <code>python3 sfn-project/manage.py createsuperuser</code>
+    - cria uma super user que permite que um token possa ser obtido ao executar uma requisição POST para a rota <code>api/token/</code> com os dados inseridos na criação.
+- <code>python3 sfn-project/manage.py collectstatic</code>
+    - coleta arquivos estáticos e armazenado no diretório correspondente a variável de configuração STATIC_ROOT.
 - <code>python manage.py runserver</code>
     - Inicializa a API com o Django.<p>
 - <code>python manage.py runscript main_psql</code>
@@ -68,7 +71,9 @@ RECEIVER_EMAIL = username@gmail.com
 
 ### About the endpoints
 
-`[GET]/`<p>
+`[POST]api/token/` - retorna um JSON com dois campos. Um dos campos é um token refresh e o outro é um token de acesso. O token de acesso é uma string com valor codificado em Base64. Este valor correspondente a um token assinado que permite que uma tentativa de atenticação do tipo 'Bearer Token', com o valor retornado no JSON seja realizada com sucesso.
+
+`[POST]api/token/refresh/` - quando o token do campo access retornado pela rota <code>api/token/</code> da aplicação expirar, esta rota retorna um novo token de acesso caso o token refresh da mesma rota <code>api/token/</code> for enviado em uma requisição para esta rota.
 
 `[GET]/articles/` - aceita requisições GET que contenham um HTTP Body Content com um JSON no formato <code>{"page": 6}</code>. Os objetos obtidos do banco de dados foram divididos em partes com até 10 itens cada, para não sobrecarregar a requisição.
 
