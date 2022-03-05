@@ -14,6 +14,9 @@
 						{
 							"name": "/",
 							"request": {
+								"auth": {
+									"type": "noauth"
+								},
 								"method": "GET",
 								"header": [],
 								"url": {
@@ -34,11 +37,21 @@
 								"disableBodyPruning": true
 							},
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"page\": 5}",
+									"raw": "{\"limit\": 50, \"my_offset\": 30}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -71,16 +84,77 @@
 						{
 							"name": "articles/",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
 								"method": "POST",
 								"header": [],
 								"body": {
-									"mode": "raw",
-									"raw": "{\"title\": \"hello world EC2!!\", \"summary\": \"summary EC2...\", \"featured\": true, \"launche_provider\": \"NOT_EMPTY\", \"event_provider\": \"[]]?\"}",
-									"options": {
-										"raw": {
-											"language": "json"
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "api_id",
+											"value": "555",
+											"type": "text"
+										},
+										{
+											"key": "title",
+											"value": "This field is required.",
+											"type": "text"
+										},
+										{
+											"key": "url",
+											"value": "This field is required.",
+											"type": "text"
+										},
+										{
+											"key": "imageUrl",
+											"value": "This field is required.",
+											"type": "text"
+										},
+										{
+											"key": "newsSite",
+											"value": "This field is required.",
+											"type": "text"
+										},
+										{
+											"key": "summary",
+											"value": "This field is required.",
+											"type": "text"
+										},
+										{
+											"key": "updatedAt",
+											"value": "2021-02-13T13:34:02",
+											"type": "text"
+										},
+										{
+											"key": "publishedAt",
+											"value": "2021-02-13T13:34:02",
+											"type": "text"
+										},
+										{
+											"key": "featured",
+											"value": "false",
+											"type": "text"
+										},
+										{
+											"key": "article_launche_id",
+											"value": "[OPTIONAL]",
+											"type": "text"
+										},
+										{
+											"key": "article_launche_id_provider",
+											"value": "[OPTIONAL]",
+											"type": "text"
 										}
-									}
+									]
 								},
 								"url": {
 									"raw": "http://sfn-project.herokuapp.com/articles/",
@@ -104,6 +178,16 @@
 								"disableBodyPruning": true
 							},
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
 								"method": "GET",
 								"header": [],
 								"body": {
@@ -131,7 +215,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "200"
+											"value": "7"
 										}
 									]
 								}
@@ -141,11 +225,21 @@
 						{
 							"name": "articles/:id/",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
 								"method": "PUT",
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\"title\": \"EC2 TITLE\"}",
+									"raw": "{\n    \"my_id\": 7,\n    \"api_id\": 14024,\n    \"title\": \"SpaceX’s Falcon Heavy likely to launch NASA telescope after ULA skips competition\",\n    \"url\": \"https://www.teslarati.com/spacex-falcon-heavy-nasa-wfirst-ngrst-launch/\",\n    \"imageUrl\": \"https://www.teslarati.com/wp-content/uploads/2020/09/Falcon-Heavy-Flight-2-liftoff-SpaceX-3-wide-crop.jpg\",\n    \"newsSite\": \"Teslarati\",\n    \"summary\": \"On the heels of what will likely be NASA’s most significant telescope launch for at least a decade, the space agency appears...\",\n    \"updatedAt\": \"2022-02-21T11:59:55\",\n    \"publishedAt\": \"2022-02-21T11:59:50\",\n    \"featured\": false,\n    \"article_launche_id\": 7,\n    \"article_launche_id_provider\": 7\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -168,7 +262,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "404"
+											"value": "7"
 										}
 									]
 								}
@@ -178,6 +272,16 @@
 						{
 							"name": "articles/:id/",
 							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "",
+											"type": "string"
+										}
+									]
+								},
 								"method": "DELETE",
 								"header": [],
 								"body": {
@@ -205,230 +309,117 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "200"
+											"value": "7"
 										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "api/token/",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "username",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "password",
+											"value": "",
+											"type": "text"
+										}
+									]
+								},
+								"url": {
+									"raw": "http://sfn-project.herokuapp.com/api/token/",
+									"protocol": "http",
+									"host": [
+										"sfn-project",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"api",
+										"token",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "api/token/refresh/",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "urlencoded",
+									"urlencoded": [
+										{
+											"key": "refresh",
+											"value": "",
+											"type": "text"
+										},
+										{
+											"key": "",
+											"value": "",
+											"type": "text",
+											"disabled": true
+										}
+									]
+								},
+								"url": {
+									"raw": "http://sfn-project.herokuapp.com/api/token/refresh/",
+									"protocol": "http",
+									"host": [
+										"sfn-project",
+										"herokuapp",
+										"com"
+									],
+									"path": [
+										"api",
+										"token",
+										"refresh",
+										""
 									]
 								}
 							},
 							"response": []
 						}
-					]
-				},
-				{
-					"name": "aws",
-					"item": [
+					],
+					"auth": {
+						"type": "bearer"
+					},
+					"event": [
 						{
-							"name": "/",
-							"request": {
-								"method": "GET",
-								"header": [],
-								"url": {
-									"raw": "http://ec2-3-133-79-232.us-east-2.compute.amazonaws.com",
-									"protocol": "http",
-									"host": [
-										"ec2-3-133-79-232",
-										"us-east-2",
-										"compute",
-										"amazonaws",
-										"com"
-									]
-								}
-							},
-							"response": []
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
 						},
 						{
-							"name": "articles/",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"page\": 5}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://127.0.0.1:8000/articles/",
-									"protocol": "http",
-									"host": [
-										"127",
-										"0",
-										"0",
-										"1"
-									],
-									"port": "8000",
-									"path": [
-										"articles",
-										""
-									],
-									"query": [
-										{
-											"key": "id",
-											"value": "1",
-											"disabled": true
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "articles/",
-							"request": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"title\": \"hello world EC2!!\", \"summary\": \"summary EC2...\", \"featured\": true, \"launche_provider\": \"NOT_EMPTY\", \"event_provider\": \"[]]?\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://ec2-3-133-79-232.us-east-2.compute.amazonaws.com/articles/",
-									"protocol": "http",
-									"host": [
-										"ec2-3-133-79-232",
-										"us-east-2",
-										"compute",
-										"amazonaws",
-										"com"
-									],
-									"path": [
-										"articles",
-										""
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "articles/:id/",
-							"protocolProfileBehavior": {
-								"disableBodyPruning": true
-							},
-							"request": {
-								"method": "GET",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://ec2-3-133-79-232.us-east-2.compute.amazonaws.com/articles/:id/",
-									"protocol": "http",
-									"host": [
-										"ec2-3-133-79-232",
-										"us-east-2",
-										"compute",
-										"amazonaws",
-										"com"
-									],
-									"path": [
-										"articles",
-										":id",
-										""
-									],
-									"variable": [
-										{
-											"key": "id",
-											"value": "404"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "articles/:id/",
-							"request": {
-								"method": "PUT",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "{\"title\": \"EC2 TITLE\"}",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://ec2-3-133-79-232.us-east-2.compute.amazonaws.com/articles/:id/",
-									"protocol": "http",
-									"host": [
-										"ec2-3-133-79-232",
-										"us-east-2",
-										"compute",
-										"amazonaws",
-										"com"
-									],
-									"path": [
-										"articles",
-										":id",
-										""
-									],
-									"variable": [
-										{
-											"key": "id",
-											"value": "1"
-										}
-									]
-								}
-							},
-							"response": []
-						},
-						{
-							"name": "articles/:id/",
-							"request": {
-								"method": "DELETE",
-								"header": [],
-								"body": {
-									"mode": "raw",
-									"raw": "",
-									"options": {
-										"raw": {
-											"language": "json"
-										}
-									}
-								},
-								"url": {
-									"raw": "http://ec2-3-133-79-232.us-east-2.compute.amazonaws.com/articles/:id/",
-									"protocol": "http",
-									"host": [
-										"ec2-3-133-79-232",
-										"us-east-2",
-										"compute",
-										"amazonaws",
-										"com"
-									],
-									"path": [
-										"articles",
-										":id",
-										""
-									],
-									"variable": [
-										{
-											"key": "id",
-											"value": "200"
-										}
-									]
-								}
-							},
-							"response": []
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
 						}
 					]
 				}
@@ -440,19 +431,169 @@
 				{
 					"name": "/",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "127.0.0.1:8000/",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "articles/",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"limit\": 50, \"my_offset\": 30}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
 						"url": {
-							"raw": "http://ec2-3-133-79-232.us-east-2.compute.amazonaws.com/",
+							"raw": "http://127.0.0.1:8000/articles/",
 							"protocol": "http",
 							"host": [
-								"ec2-3-133-79-232",
-								"us-east-2",
-								"compute",
-								"amazonaws",
-								"com"
+								"127",
+								"0",
+								"0",
+								"1"
 							],
+							"port": "8000",
 							"path": [
+								"articles",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "articles/",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "api_id",
+									"value": "555",
+									"type": "text"
+								},
+								{
+									"key": "title",
+									"value": "This field is required.",
+									"type": "text"
+								},
+								{
+									"key": "url",
+									"value": "This field is required.",
+									"type": "text"
+								},
+								{
+									"key": "imageUrl",
+									"value": "This field is required.",
+									"type": "text"
+								},
+								{
+									"key": "newsSite",
+									"value": "This field is required.",
+									"type": "text"
+								},
+								{
+									"key": "summary",
+									"value": "This field is required.",
+									"type": "text"
+								},
+								{
+									"key": "updatedAt",
+									"value": "2021-02-13T13:34:02",
+									"type": "text"
+								},
+								{
+									"key": "publishedAt",
+									"value": "2021-02-13T13:34:02",
+									"type": "text"
+								},
+								{
+									"key": "featured",
+									"value": "false",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/articles/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"articles",
 								""
 							]
 						}
@@ -462,6 +603,105 @@
 				{
 					"name": "articles/:id/",
 					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/articles/:id/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"articles",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "12"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "articles/:id/",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"my_id\": 7,\r\n    \"api_id\": 14024,\r\n    \"title\": \"SpaceX’s Falcon Heavy likely to launch NASA telescope after ULA skips competition\",\r\n    \"url\": \"https://www.teslarati.com/spacex-falcon-heavy-nasa-wfirst-ngrst-launch/\",\r\n    \"imageUrl\": \"https://www.teslarati.com/wp-content/uploads/2020/09/Falcon-Heavy-Flight-2-liftoff-SpaceX-3-wide-crop.jpg\",\r\n    \"newsSite\": \"Teslarati\",\r\n    \"summary\": \"On the heels of what will likely be NASA’s most significant telescope launch for at least a decade, the space agency appears...\",\r\n    \"updatedAt\": \"2022-02-21T11:59:55\",\r\n    \"publishedAt\": \"2022-02-21T11:59:50\",\r\n    \"featured\": false,\r\n    \"article_launche_id\": 777,\r\n    \"article_launche_id_provider\": 777\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/articles/:id/",
+							"protocol": "http",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "8000",
+							"path": [
+								"articles",
+								":id",
+								""
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "7"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "articles/:id/",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
 						"method": "DELETE",
 						"header": [],
 						"body": {
@@ -491,7 +731,7 @@
 							"variable": [
 								{
 									"key": "id",
-									"value": "500"
+									"value": "7"
 								}
 							]
 						}
@@ -499,102 +739,30 @@
 					"response": []
 				},
 				{
-					"name": "articles/:id",
+					"name": "api/token/",
 					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\"title\": \"lllll\"}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+						"auth": {
+							"type": "noauth"
 						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/articles/:id/",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"articles",
-								":id",
-								""
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "500"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "articles/:id/",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://127.0.0.1:8000/articles/:id/",
-							"protocol": "http",
-							"host": [
-								"127",
-								"0",
-								"0",
-								"1"
-							],
-							"port": "8000",
-							"path": [
-								"articles",
-								":id",
-								""
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "500"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "articles",
-					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\"title\": \"hello world!!\", \"summary\": \"summary ...\", \"featured\": false, \"launche_provider\": \"NOT_EMPTY\", \"event_provider\": \"??\"}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "",
+									"type": "text"
 								}
-							}
+							]
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/articles/",
+							"raw": "http://127.0.0.1:8000/api/token/",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -604,7 +772,8 @@
 							],
 							"port": "8000",
 							"path": [
-								"articles",
+								"api",
+								"token",
 								""
 							]
 						}
@@ -612,24 +781,31 @@
 					"response": []
 				},
 				{
-					"name": "articles",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "api/token/refresh/",
 					"request": {
-						"method": "GET",
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
 						"header": [],
 						"body": {
-							"mode": "raw",
-							"raw": "{\"page\": 5}",
-							"options": {
-								"raw": {
-									"language": "json"
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "refresh",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "",
+									"value": "",
+									"type": "text",
+									"disabled": true
 								}
-							}
+							]
 						},
 						"url": {
-							"raw": "http://127.0.0.1:8000/articles/",
+							"raw": "http://127.0.0.1:8000/api/token/refresh/",
 							"protocol": "http",
 							"host": [
 								"127",
@@ -639,19 +815,37 @@
 							],
 							"port": "8000",
 							"path": [
-								"articles",
+								"api",
+								"token",
+								"refresh",
 								""
-							],
-							"query": [
-								{
-									"key": "id",
-									"value": "1",
-									"disabled": true
-								}
 							]
 						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}

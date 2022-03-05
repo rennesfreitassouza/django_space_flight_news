@@ -75,9 +75,9 @@ RECEIVER_EMAIL = username@gmail.com
 
 
 
-`[GET]/test_articles/` - Lista o conteúdo do banco de dados. Lê o conteúdo de um JSON no formato <code>{"limit": 50, "my_offset": 30}</code>. Sobre conteúdo do Body Content da requisição, ler a docstring em: <code>coodesh_app.api_views.SFNArticlesPagination</code>.
+`[GET]/articles/` - lista o conteúdo do banco de dados. Lê o conteúdo de um JSON no formato <code>{"limit": 50, "my_offset": 30}</code>. Sobre conteúdo do Body Content da requisição, ler a docstring em: <code>coodesh_app.api_views.SFNArticlesPagination</code>.
 
-`[POST]/test_articles/` adiciona um novo artigo. O formato dos dados envio dos dados deve ser uma requisição HTTP POST um Body Content no seguinte formato:
+`[POST]/articles/` - adiciona um novo artigo. O formato dos dados envio dos dados deve ser uma requisição HTTP POST um Body Content no seguinte formato:
 ```
 {
     "api_id": 222,
@@ -94,11 +94,11 @@ RECEIVER_EMAIL = username@gmail.com
 }
 ```
 
-`[GET]/test_articles/:id/` retorna um JSON com os dados atuais do registro de um article com a chave primária igual ao id na url, ou um JSON com uma mensagem de erro.
+`[GET]/articles/:id/` - retorna um JSON com os dados atuais do registro de um article com a chave primária igual ao id na url, ou um JSON com uma mensagem de erro.
 
-`[PUT]/test_articles/:id/` Atualiza um article baseado no id da requisição. Uma nova requisição [GET] deve ser realizada para que os os dados atualizados do registro sejam retornados. Todos os dados do registro devem ser enviados na requisição.
+`[PUT]/articles/:id/` - atualiza um article baseado no id da requisição. Uma nova requisição [GET] deve ser realizada para que os os dados atualizados do registro sejam retornados. Todos os dados do registro devem ser enviados na requisição.
 
-`[DELETE]/test_articles/:id/` remove um article baseado no id do endereço da requisição HTTP DELETE e retorna uma resposta HTTP sem conteúdo e com status code 204. Também retorna um JSON, em caso de erro.
+`[DELETE]/articles/:id/` - remove um article baseado no id do endereço da requisição HTTP DELETE e retorna uma resposta HTTP sem conteúdo e com status code 204. Também retorna um JSON, em caso de erro.
 
 
 ### About
