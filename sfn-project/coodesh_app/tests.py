@@ -9,7 +9,7 @@ from coodesh_app.management.commands.load_api_data import DATETIME_FORMAT
 
 # Create your tests here.
 class SFNArticlesCreateTestCase(APITestCase):
-
+    '''
     def test_create_record(self):
         initial_sfnarticles_count = SFNArticles.objects.count()
         # print("initial_sfnarticles_count", initial_sfnarticles_count)
@@ -58,7 +58,8 @@ class SFNArticlesCreateTestCase(APITestCase):
                         self.assertEqual(new_sfnarticle_data["launche_id"], lauchesValue, msg=f"new_sfnarticle_data['article_launche_id'] {new_sfnarticle_data['launche_id']}, lauchesValue {lauchesValue}")
                     else:
                         self.assertEqual(new_sfnarticle_data['launche_provider'], lauchesValue, msg=f"new_sfnarticle_data['launche_provider'] {new_sfnarticle_data['launche_provider']}, lauchesValue {lauchesValue}")
-
+    '''
+    
     def test_create_record_new_route(self):
         initial_sfnarticles_count = SFNArticles.objects.count()
         # print("initial_sfnarticles_count", initial_sfnarticles_count)
@@ -76,12 +77,12 @@ class SFNArticlesCreateTestCase(APITestCase):
             "article_launche_id": "article_launche_idarticle_launche_id",
             "article_launche_id_provider": "article_launche_id_providerarticle_launche_id_provider"
         }
-        response = self.client.post('http://127.0.0.1:8000/test_articles/', data=new_sfnarticle_data)
+        response = self.client.post('http://127.0.0.1:8000/articles/', data=new_sfnarticle_data)
         if response.status_code != 201:
             print(response.data)
         else:
             # response = self.client.get(f'http://127.0.0.1:8000/test_articles/')#{response.data["my_id"]}') # OrderedDict with count
-            response = self.client.get(f'http://127.0.0.1:8000/test_articles/{response.data["my_id"]}/') # dict
+            response = self.client.get(f'http://127.0.0.1:8000/articles/{response.data["my_id"]}/') # dict
 
         
         # print("response.data", response.data)
@@ -115,8 +116,9 @@ class SFNArticlesCreateTestCase(APITestCase):
                     elif lauchesKey == 'sfnarticles':
                         self.assertEqual(response.data['my_id'], lauchesValue, msg=f"response.data['my_id'] {response.data['my_id']}, lauchesValue {lauchesValue}")
 
-class SFNArticlesDestroyTestCase(APITestCase):
 
+class SFNArticlesDestroyTestCase(APITestCase):
+    '''
     def create_sfnarticle_article(self):
 
         new_sfnarticle_data = {
@@ -160,7 +162,7 @@ class SFNArticlesDestroyTestCase(APITestCase):
             SFNArticles.DoesNotExist,
             SFNArticles.objects.get, my_id=sfnarticles_my_id,
         )
-
+    '''
     def create_sfnarticle_article_new_route(self):
 
         new_sfnarticle_data = {
@@ -177,15 +179,15 @@ class SFNArticlesDestroyTestCase(APITestCase):
         }
         payload = json.dumps(new_sfnarticle_data)
 
-        response = self.client.post('http://127.0.0.1:8000/test_articles/', 
+        response = self.client.post('http://127.0.0.1:8000/articles/', 
                    data=payload,
                    content_type="application/json")
 
         if response.status_code != 201:
             print(response.data)
         else:
-            # response = self.client.get(f'http://127.0.0.1:8000/test_articles/')#{response.data["my_id"]}') # OrderedDict with count
-            response = self.client.get(f'http://127.0.0.1:8000/test_articles/{response.data["my_id"]}/') # dict
+            # response = self.client.get(f'http://127.0.0.1:8000/articles/')#{response.data["my_id"]}') # OrderedDict with count
+            response = self.client.get(f'http://127.0.0.1:8000/articles/{response.data["my_id"]}/') # dict
 
         return response
     
@@ -213,7 +215,7 @@ class SFNArticlesDestroyTestCase(APITestCase):
 
 
 class SFNArticlesListTestCase(APITestCase):
-
+    '''
     def test_list_sfnarticles(self):
         initial_sfnarticles_count = SFNArticles.objects.count()
         # print("initial_sfnarticles_count", initial_sfnarticles_count)
@@ -224,11 +226,11 @@ class SFNArticlesListTestCase(APITestCase):
         self.assertFalse(response.data['has_previous'])
         self.assertEqual(response.data['current_page_number'], 1)
         self.assertEqual(response.data['num_pages'], 1)
-
+    '''
     def test_list_sfnarticles_new_route(self):
         initial_sfnarticles_count = SFNArticles.objects.count()
         # print("initial_sfnarticles_count", initial_sfnarticles_count)
-        response = self.client.get('http://127.0.0.1:8000/test_articles/')
+        response = self.client.get('http://127.0.0.1:8000/articles/')
         # print('response.data', response.data)
         self.assertListEqual(list(), response.data['results'])
         self.assertIsNone(response.data['previous'])
@@ -236,7 +238,7 @@ class SFNArticlesListTestCase(APITestCase):
         self.assertEqual(response.data['count'], 0)
 
 class SFNArticlesUpdateTestCase(APITestCase):
-
+    '''
     def create_sfnarticle_article(self):
 
         new_sfnarticle_data = {
@@ -291,7 +293,8 @@ class SFNArticlesUpdateTestCase(APITestCase):
             "!!!!NOT_EMPTY!!!",
             SFNArticles.objects.all().first().title
         )
-
+    '''
+    
     def create_sfnarticle_article_new_route(self):
 
         new_sfnarticle_data = {
@@ -306,12 +309,12 @@ class SFNArticlesUpdateTestCase(APITestCase):
             "featured": True
         }
 
-        response = self.client.post('http://127.0.0.1:8000/test_articles/', data=new_sfnarticle_data)
+        response = self.client.post('http://127.0.0.1:8000/articles/', data=new_sfnarticle_data)
         if response.status_code != 201:
             print(response.data)
         else:
             # response = self.client.get(f'http://127.0.0.1:8000/test_articles/')#{response.data["my_id"]}') # OrderedDict with count
-            response = self.client.get(f'http://127.0.0.1:8000/test_articles/{response.data["my_id"]}/') # dict
+            response = self.client.get(f'http://127.0.0.1:8000/articles/{response.data["my_id"]}/') # dict
 
         return response
     
@@ -337,12 +340,12 @@ class SFNArticlesUpdateTestCase(APITestCase):
         # print("type(new_payload)",type(new_payload),'new_payload', new_payload)
 
         response = self.client.put(
-            path='http://127.0.0.1:8000/test_articles/{}/'.format(sfnarticles.my_id),
+            path='http://127.0.0.1:8000/articles/{}/'.format(sfnarticles.my_id),
             data=new_payload,
             content_type="application/json"
         )
 
-        response = self.client.get(path='http://127.0.0.1:8000/test_articles/{}/'.format(sfnarticles.my_id))
+        response = self.client.get(path='http://127.0.0.1:8000/articles/{}/'.format(sfnarticles.my_id))
 
         
         # print("response.data", response.data)

@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 @api_view(['GET'])
-#@permission_classes([AllowAny])
+@permission_classes([AllowAny])
 def home(request):
     return render(request, "coodesh_app/home.html")
 

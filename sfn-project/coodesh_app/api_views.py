@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
+
 # articles/
 # articles/:my_id/
 class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
@@ -229,6 +230,7 @@ class SFNArticlesPagination(LimitOffsetPagination):
             #self.set_my_offset()
             return self.my_offset #
 
+
 @permission_classes([IsAuthenticated])
 # test_articles/
 class SFNArticlesList(ListAPIView, CreateAPIView):
@@ -320,3 +322,5 @@ class SFNArticlesList(ListAPIView, CreateAPIView):
     def create_sfnarticleslaunche(self, request, last_id):
         new_launche = SFNArticlesLaunchesAux()
         new_launche.create2(request, last_id)
+
+

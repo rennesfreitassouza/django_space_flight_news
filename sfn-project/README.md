@@ -51,6 +51,7 @@ RECEIVER_EMAIL = username@gmail.com
 - Executar algum dos comandos listados a seguir.
 
 - <strong>Atenção</strong>: executar o interpretador Python para iniciar a REST API com o Django no diretório que os arquivos <code>configEmailAlarm.cfg</code>, <code>ArticlesData.csv</code>, <code>EventsData.csv</code> e <code>LaunchesData.csv</code> estiverem armazenados.
+- <strong>Atenção</strong>: executar o interpretador python para realização dos testes com o Django no mesmo diretório que o arquivo <code>manage.py</code> e alterar a string <code>config.settings.production</code> para <code>config.settings.test</code>. Além disso, comentar todos os decorators do módulo <code>/coodesh_app/api_views.py</code>, pois nos casos de teste nenhuma autenticação é realizada.
 
 ### Useful commands 
 
@@ -70,32 +71,11 @@ RECEIVER_EMAIL = username@gmail.com
 
 `[POST]api/token/` - retorna um JSON com dois campos. Um dos campos é um token refresh e o outro é um token de acesso. O token de acesso é uma string com valor codificado em Base64. Este valor correspondente a um token assinado que permite que uma tentativa de atenticação do tipo 'Bearer Token', com o valor retornado no JSON seja realizada com sucesso.
 
-`[POST]api/token/refresh/` - quando o token do campo access retornado pela rota <code>api/token/</code> da aplicação expirar, esta rota retorna um novo token de acesso caso o token refresh da mesma rota <code>api/token/</code> for enviado em uma requisição para esta rota.
+`[POST]api/token/refresh/` - quando o token do campo access retornado pela rota <code>api/token/</code> da aplicação expirar, esta rota retorna um novo token de acesso caso o token refresh da mesma rota <code>api/token/</code> for enviado em uma requisição para esta rota (<code>api/token/refresh/</code>).
 
-`[GET]/articles/` - aceita requisições GET que contenham um HTTP Body Content com um JSON no formato <code>{"page": 6}</code>. Os objetos obtidos do banco de dados foram divididos em partes com até 10 itens cada, para não sobrecarregar a requisição.
 
-`[GET]/test_articles/` - Lista o conteúdo do banco de dados. Lê o conteúdo de um JSON no formato <code>{"limit": 50, "my_offset": 30}</code>. Sobre o conteúdo do Body Content da requisição :<code>sfn-project.coodesh_app.api_views.SFNArticlesPagination</code>.
 
-`[POST]/articles/` adiciona um novo artigo. O formato dos dados envio dos dados pode ser uma requisição HTTP POST sem Body Content ou com um Body Content no seguinte formato:
-```
-{
-    "api_id": 0,
-    "title": "EMPTY",
-    "url": "EMPTY",
-    "imageUrl": "EMPTY",
-    "newsSite": "EMPTY",
-    "summary": "EMPTY",
-    "updatedAt": "2022-02-13T13:34:02",
-    "publishedAt": "2022-02-13T13:34:02",
-    "featured": true,
-	"event_id": "EMPTY",
-    "event_provider": "EMPTY",
-    "launche_id": "EMPTY",
-	"launche_provider": "EMPTY",
-	"article_launche_id": "EMPTY",
-	"provider": "EMPTY"
-}
-```
+`[GET]/test_articles/` - Lista o conteúdo do banco de dados. Lê o conteúdo de um JSON no formato <code>{"limit": 50, "my_offset": 30}</code>. Sobre conteúdo do Body Content da requisição, ler a docstring em: <code>coodesh_app.api_views.SFNArticlesPagination</code>.
 
 `[POST]/test_articles/` adiciona um novo artigo. O formato dos dados envio dos dados deve ser uma requisição HTTP POST um Body Content no seguinte formato:
 ```
@@ -114,15 +94,9 @@ RECEIVER_EMAIL = username@gmail.com
 }
 ```
 
-`[GET]/articles/:id/` retorna um JSON com os dados atuais do registro de um article com a chave primária igual ao id na url, ou um JSON com uma mensagem de erro.
-
 `[GET]/test_articles/:id/` retorna um JSON com os dados atuais do registro de um article com a chave primária igual ao id na url, ou um JSON com uma mensagem de erro.
 
-`[PUT]/articles/:id/` Atualiza um article baseado no id da requisição e retorna os dados já atualizados, ou retorna um JSON informando que o registro não existe.
-
 `[PUT]/test_articles/:id/` Atualiza um article baseado no id da requisição. Uma nova requisição [GET] deve ser realizada para que os os dados atualizados do registro sejam retornados. Todos os dados do registro devem ser enviados na requisição.
-
-`[DELETE]/articles/:id/` remove um article baseado no id do endereço da requisição HTTP DELETE e retorna a representação para impressão daquele article. Caso o id não retorne nenhum objeto, uma string de erro é retornada.
 
 `[DELETE]/test_articles/:id/` remove um article baseado no id do endereço da requisição HTTP DELETE e retorna uma resposta HTTP sem conteúdo e com status code 204. Também retorna um JSON, em caso de erro.
 

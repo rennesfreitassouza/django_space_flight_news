@@ -19,7 +19,7 @@ if READ_DOT_ENV_FILE:
     env_dir = os.path.join(ROOT_DIR, '.envs')
     
     local_env_dir = os.path.join(env_dir, '.local')
-   
+    print("local_env_dir", local_env_dir)
     # Take environment variables from .env file
     # OS environment variables take precedence over variables from .env
     environ.Env.read_env(os.path.join(local_env_dir, '.django'))
