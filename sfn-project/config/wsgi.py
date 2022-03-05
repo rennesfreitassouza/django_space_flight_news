@@ -15,7 +15,7 @@ from django.core.wsgi import get_wsgi_application
 
 # sfn-project directory.
 ROOT_DIR = Path(__file__).resolve(strict=True).parent.parent
-sys.path.append(str(ROOT_DIR / "sfn-project"))
+sys.path.append(str(ROOT_DIR))
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.production')
 
 application = get_wsgi_application()
