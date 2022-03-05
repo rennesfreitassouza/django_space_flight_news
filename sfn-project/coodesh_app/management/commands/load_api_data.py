@@ -4,19 +4,10 @@ from django.core.management import BaseCommand
 from coodesh_app.models import SFNArticles, SFNArticlesLaunches, SFNArticlesEvents
 from pytz import UTC
 import os
-from coodesh_app.src import notification
-import configparser
+from coodesh_app.src.exceptions import UnknownExceptionNotify, SFNArticlesDoesNotExistNotify
 
 
 DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
-
-
-def notify(message_body):
-    parser = configparser.ConfigParser()
-    parser.read("configEmailAlarm.cfg")
-    receiver_email = parser['DEFAULT'].get('RECEIVER_EMAIL')
-    notification.main(receiver_email=receiver_email,
-                      subject_line='[Notificação] Falha banco de dados sfn-project', message_body=message_body)
 
 
 class Command(BaseCommand):
@@ -51,7 +42,11 @@ class Command(BaseCommand):
                     article.updatedAt = UTC.localize(
                         datetime.strptime(raw_updatedAt[:-5], DATETIME_FORMAT))
                     article.featured = row['featured']
-                    article.save()
+                    
+                    try:
+                        article.save()
+                    except Exception as e:
+                        raise UnknownExceptionNotify(__file__, e.args, notify=True)
 
                 if row['launches'] == "NOT_EMPTY":
                     with open('LaunchesData.csv', encoding='utf-8') as articlesLaunches:
@@ -61,7 +56,7 @@ class Command(BaseCommand):
                                     db_article = SFNArticles.objects.get(
                                         my_id=launches_row['article_my_id'])
                                 except SFNArticles.DoesNotExist as e:
-                                    print(f'{e}')
+                                    raise SFNArticlesDoesNotExistNotify(__file__, e.args, notify=True)
                                 else:
                                     article_launche = SFNArticlesLaunches()
 
@@ -72,10 +67,7 @@ class Command(BaseCommand):
                                     try:
                                         article_launche.save()
                                     except Exception as e:
-                                        print(
-                                            f"SFNArticlesLaunches save() error {e}")
-                                        notify(
-                                            f"SFNArticlesLaunches().save() exception: {e}. Record not saved.")
+                                        raise UnknownExceptionNotify(__file__, e.args, notify=True)
 
                 if row['events'] == "NOT_EMPTY":
                     with open('EventsData.csv', encoding='utf-8') as articlesLaunches:
@@ -85,7 +77,7 @@ class Command(BaseCommand):
                                     db_article = SFNArticles.objects.get(
                                         my_id=launches_row['article_my_id'])
                                 except SFNArticles.DoesNotExist as e:
-                                    print(f'{e}')
+                                    raise SFNArticlesDoesNotExistNotify(__file__, e.args, notify=True)
                                 else:
                                     article_event = SFNArticlesEvents()
 
@@ -95,9 +87,6 @@ class Command(BaseCommand):
                                     try:
                                         article_event.save()
                                     except Exception as e:
-                                        print(
-                                            f"SFNArticlesEvents save() error: {e}")
-                                        notify(
-                                            f"SFNArticlesEvents().save() exception: {e}. Record not saved.")
+                                        raise UnknownExceptionNotify(__file__, e.args, notify=True)
 
         print("Load complete!")

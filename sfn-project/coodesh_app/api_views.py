@@ -11,11 +11,12 @@ from rest_framework.pagination import _positive_int
 from django.contrib.auth.mixins import LoginRequiredMixin
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-
+from coodesh_app.src.exceptions import UnknownExceptionNotify
 
 # articles/
 # articles/:my_id/
 class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
+    """deprecated"""
     queryset = SFNArticles.objects
     lookup_field = 'my_id'
     serializer_class = SFNArticlesSerializer
@@ -24,8 +25,9 @@ class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
         if 'my_id' in kwargs.keys():
             try:
                 response = self.queryset.get(my_id=kwargs['my_id'])
-            except:
+            except Exception as e:
                 response = {'ERROR': 'ERROR TO GET RECORD'}
+                UnknownExceptionNotify(__file__, e.args, response, notify=False)
             return response
 
     def delete(self, request, *args, **kwargs):
@@ -35,8 +37,9 @@ class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
             try:
                 response_repr = repr(response)
                 response = response.delete()
-            except:
+            except Exception as e:
                 response = {'ERROR': 'ERROR TO DELETE RECORD'}
+                UnknownExceptionNotify(__file__, e.args, response, notify=False)
             else:
                 response = f"record {response_repr} {kwargs['my_id']} deleted"
 
@@ -50,8 +53,9 @@ class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
             response = self.set_article(response, **request.data)
             try:
                 response.save()
-            except:
+            except Exception as e:
                 response = {'ERROR': 'ERROR TO UPDATE RECORD'}
+                UnknownExceptionNotify(__file__, e.args, response, notify=False)
             else:
                 response = self.get(**kwargs)
                 print("response", response)
@@ -322,5 +326,4 @@ class SFNArticlesList(ListAPIView, CreateAPIView):
     def create_sfnarticleslaunche(self, request, last_id):
         new_launche = SFNArticlesLaunchesAux()
         new_launche.create2(request, last_id)
-
 
