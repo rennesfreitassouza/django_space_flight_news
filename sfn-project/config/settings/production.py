@@ -1,5 +1,5 @@
 from .base import *  # noqa
-from .base import env, local_env_dir
+from .base import env
 from django.core.management.utils import get_random_secret_key
 
 # GENERAL
@@ -33,3 +33,16 @@ DATABASES["OPTIONS"] = {'sslmode': 'require'}
 DATABASES["default"]["ATOMIC_REQUESTS"] = True  # noqa F405
 DATABASES["default"]["CONN_MAX_AGE"] = env.int("CONN_MAX_AGE", default=60)  # noqa F405
 
+AWS_STORAGE_BUCKET_NAME = env.str('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME = env.str('AWS_S3_REGION_NAME')
+AWS_ACCESS_KEY_ID =  env.str('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = env.str('AWS_SECRET_ACCESS_KEY')
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+AWS_DEFAULT_ACL = None
+
+STATICFILES_LOCATION = 'static'
+STATICFILES_STORAGE = 'custom_storages.StaticStorage'
+
+MEDIAFILES_LOCATION = 'media'
+DEFAULT_FILE_STORAGE = 'custom_storages.MediaStorage'

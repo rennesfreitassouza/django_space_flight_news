@@ -79,6 +79,8 @@ THIRD_PARTY_APPS = [
     # https://django-extensions.readthedocs.io/en/latest/installation_instructions.html#configuration
     'django_extensions',
     'rest_framework',
+    'drf_spectacular',
+    'storages',
 ]
 
 LOCAL_APPS = [
@@ -152,5 +154,13 @@ TEMPLATES = [
 REST_FRAMEWORK = {
     #'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',), 
     'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'sfn-project 2022 API',
+    'DESCRIPTION': '2a. solução desenvolvida para o desafio 2021 - Space Flight News.',
+    'VERSION': '2.0',
+    # OTHER SETTINGS
 }
 
