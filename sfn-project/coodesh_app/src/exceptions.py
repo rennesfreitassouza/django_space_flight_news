@@ -2,7 +2,7 @@ from coodesh_app.src import notification
 import configparser
 
 
-def notify(message_body):
+def notify_caller(message_body):
         parser = configparser.ConfigParser()
         try:
             parser.read("configEmailAlarm.cfg")
@@ -23,7 +23,7 @@ class UnknownExceptionNotify(Exception):
         if args:
             print(args)
             if notify is True:
-                notify(args)
+                notify_caller(args)
             
 
 
@@ -33,4 +33,4 @@ class SFNArticlesDoesNotExistNotify(Exception):
         if args:
             print(args)
             if notify is True:
-                notify(args)
+                notify_caller(args)
