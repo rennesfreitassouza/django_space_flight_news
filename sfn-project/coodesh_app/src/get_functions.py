@@ -1,10 +1,10 @@
 from django.core.paginator import Paginator
 from coodesh_app.models import SFNArticles
 from coodesh_app.serializers import SFNArticlesSerializer
-
+from coodesh_app.src.exceptions import SFNArticlesDoesNotExistNotify
 
 def get_page(request_data={'page': 1}):
-
+    """deprecated"""
     space_flight_a = SFNArticles.objects.all().order_by('my_id')
     items_per_page = 10
     paginator = Paginator(space_flight_a, items_per_page)
@@ -23,10 +23,12 @@ def get_page(request_data={'page': 1}):
 
 
 def get_article_by_my_id(my_id):
+    """deprecated"""
     try:
         space_flight_a = SFNArticles.objects.get(my_id=my_id)
-    except SFNArticles.DoesNotExist:
+    except SFNArticles.DoesNotExist as e:
         retorno = {'ERROR': 'RECORD DOES NOT EXIST'}
+        SFNArticlesDoesNotExistNotify(__file__, e.args, retorno, notify=False)
     else:
         retorno = SFNArticlesSerializer(
         ).format_article_data(space_flight_a)

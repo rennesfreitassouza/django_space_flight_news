@@ -3,10 +3,10 @@ from coodesh_app.management.commands.load_api_data import DATETIME_FORMAT
 from datetime import datetime
 from pytz import UTC
 from coodesh_app.serializers import SFNArticlesSerializer
-
+from coodesh_app.src.exceptions import UnknownExceptionNotify
 
 def create_new_article(data):
-
+    """deprecated"""
     article = SFNArticles()
     article.api_id = data.get('api_id', 0)
     article.title = data.get('title', 'EMPTY')
@@ -30,8 +30,8 @@ def create_new_article(data):
     if 'my_id' in retorno.keys():
         try:
             new_record = SFNArticles.objects.get(my_id=retorno['my_id'])
-        except:
-            response = {'ERROR': 'ERROR TO GET RECORD'}
+        except Exception as e:
+            raise UnknownExceptionNotify(__file__, e.args, notify=False)
         else:
             create_new_launche(new_record, data)
             create_new_event(new_record, data)
@@ -40,6 +40,7 @@ def create_new_article(data):
 
 
 def create_new_launche(db_article, data):
+    """deprecated"""
     article_launche = SFNArticlesLaunches()
 
     article_launche.article_launche_id = data.get('launche_id', 'EMPTY')
@@ -49,11 +50,11 @@ def create_new_launche(db_article, data):
     try:
         article_launche.save()
     except Exception as e:
-        print(
-            f"SFNArticlesLaunches save() error {e}")
+        raise UnknownExceptionNotify(__file__, e.args, notify=False)
 
 
 def create_new_event(db_article, data):
+    """deprecated"""
     article_event = SFNArticlesEvents()
 
     article_event.article_event_id = data.get('event_id', 'EMPTY')
@@ -62,5 +63,4 @@ def create_new_event(db_article, data):
     try:
         article_event.save()
     except Exception as e:
-        print(
-            f"SFNArticlesEvents save() error: {e}")
+        raise UnknownExceptionNotify(__file__, e.args, notify=False)

@@ -1,6 +1,5 @@
 from django.db import models
-from django.db.utils import IntegrityError
-from django.db.models import BigAutoField
+from coodesh_app.src.exceptions import SFNArticlesDoesNotExistNotify
 # Create your models here.
 
 class Tmy_id:
@@ -8,12 +7,12 @@ class Tmy_id:
     def get_latest_my_id(self):
         try:
             record = SFNArticles.objects.all().latest('my_id') 
-        except SFNArticles.DoesNotExist:
+        except SFNArticles.DoesNotExist as e:
             msg = {'ERROR': 'NO RECORD RETRIEVED'}
-            
+            SFNArticlesDoesNotExistNotify(__file__, e.args, msg, notify=False)
             response = 0
         else:
-            msg = {'Ok': 'RECORD RETRIEVED'}
+            msg = {'Ok': 'RECORD RETRIEVED. Generating new pk...'}
             response = record.my_id + 1
         print(msg)
         return response
@@ -34,6 +33,7 @@ class SFNArticles(models.Model):
      
 
     def set_article_data_pk_1(self, article):
+        """deprecated"""
         saved = False
         infite = 0
         while(saved is False and infite < 120_125):

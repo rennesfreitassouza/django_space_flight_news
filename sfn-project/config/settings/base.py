@@ -18,9 +18,19 @@ READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=False)
 if READ_DOT_ENV_FILE:
     env_dir = os.path.join(ROOT_DIR, '.envs')
     
+<<<<<<< HEAD
+    ENVIRONMENT = env.str('ENVIRONMENT')
+    local_env_dir = os.path.join(env_dir, ENVIRONMENT)
+    
+    
+    print("ENVIRONMENT", ENVIRONMENT)
+
+    # Take environment variables from .django file
+=======
     local_env_dir = os.path.join(env_dir, '.production')
    
     # Take environment variables from .env file
+>>>>>>> main
     # OS environment variables take precedence over variables from .env
     environ.Env.read_env(os.path.join(local_env_dir, '.django'))
 
@@ -75,6 +85,11 @@ THIRD_PARTY_APPS = [
     # https://django-extensions.readthedocs.io/en/latest/installation_instructions.html#configuration
     'django_extensions',
     'rest_framework',
+<<<<<<< HEAD
+    'drf_spectacular',
+    'storages',
+=======
+>>>>>>> main
 ]
 
 LOCAL_APPS = [
@@ -148,5 +163,16 @@ TEMPLATES = [
 REST_FRAMEWORK = {
     #'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',), 
     'DEFAULT_AUTHENTICATION_CLASSES': ('rest_framework_simplejwt.authentication.JWTAuthentication',),
+<<<<<<< HEAD
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'sfn-project 2022 API',
+    'DESCRIPTION': '2a. solução desenvolvida para o desafio 2021 - Space Flight News.',
+    'VERSION': '2.0',
+    # OTHER SETTINGS
+=======
+>>>>>>> main
 }
 

@@ -16,7 +16,7 @@ def home(request):
 
 
 @api_view(['GET', 'POST'])
-@permission_classes([IsAuthenticated])
+#@permission_classes([AllowAny])
 def gen_article_view(request):
     response = dict()
 

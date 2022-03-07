@@ -152,3 +152,9 @@ static/
 
 # .cfg files
 configEmailAlarm.cfg
+
+# .django files
+.django
+
+# .ebextensions folder
+.ebextensions/
