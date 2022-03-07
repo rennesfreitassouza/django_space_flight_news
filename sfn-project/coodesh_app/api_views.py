@@ -241,7 +241,6 @@ class SFNArticlesList(ListAPIView, CreateAPIView):
     queryset = SFNArticles.objects.all().order_by('my_id')
     serializer_class = SFNArticlesSerializer
     pagination_class = SFNArticlesPagination
-
     
     def get_queryset(self):
         print("self.request.data", self.request.data )
@@ -326,4 +325,3 @@ class SFNArticlesList(ListAPIView, CreateAPIView):
     def create_sfnarticleslaunche(self, request, last_id):
         new_launche = SFNArticlesLaunchesAux()
         new_launche.create2(request, last_id)
-

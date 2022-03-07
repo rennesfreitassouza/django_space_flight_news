@@ -34,7 +34,7 @@ def gen_article_view(request):
 
 
 @api_view(['GET', 'PUT', 'DELETE'])
-@permission_classes([AllowAny])
+@permission_classes([IsAuthenticated])
 def get_article(request, *args, **kwargs):
     if request.method == 'GET':
         if 'my_id' in kwargs.keys():

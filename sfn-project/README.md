@@ -1,6 +1,10 @@
 ## Django sfn-project 2022
 
+<<<<<<< HEAD
 [A 2a. solução](/) desenvolvida por mim para o desafio [2021 - Space Flight News](../README.md).
+=======
+[A 2a. solução](http://sfn-project.herokuapp.com/) desenvolvida por mim para o desafio [🏅 2021 - Space Flight News](../README.md).
+>>>>>>> main
 
 
 ### Tecnologias utilizadas
@@ -9,7 +13,11 @@
 - [Framework Django](https://docs.djangoproject.com/en/4.0/)
 - [Django REST framework](https://www.django-rest-framework.org/)
 - [Cookiecutter](https://github.com/audreyfeldroy/cookiecutter-pypackage) para reestruturar o projeto Django. [Sobre](https://www.youtube.com/watch?v=RVLzZc3GUrk) esse módulo.
+<<<<<<< HEAD
 - Serviços de computação em nuvem: [Heroku](https://heroku.com), [Amazon S3](https://aws.amazon.com/s3/?nc1=h_ls) e [AWS IAM](https://aws.amazon.com/iam/?nc1=h_ls)
+=======
+- Serviços de computação em nuvem: [Heroku](https://heroku.com) e [Amazon EC2](https://aws.amazon.com/ec2/)
+>>>>>>> main
 - [Heroku Advanced Scheduler](https://devcenter.heroku.com/articles/advanced-scheduler)
 - [Heroku Postgres](https://devcenter.heroku.com/categories/heroku-postgres)
 - [Spaceflight News API](https://api.spaceflightnewsapi.net/v3/documentation)
@@ -21,6 +29,7 @@
 - Utilizar as mesmas tecnologias ou semelhantes as que foram mencionadas no tópico acima.
 - Clonar [este repositório](https://lab.coodesh.com/rennesfrso/space-flight-news-20210823).
 - Criar um virtual environment e instalar os seguintes módulos com o comando <code>pip install -r sfn-project/requirements.txt</code>.
+<<<<<<< HEAD
 - Alterar os nomes dos arquivos <code>sfn-project/.envs/.production/.django_example</code> e <code>sfn-project/configEmailAlarm.cfg_example</code>, para <code>.django</code> e <code>configEmailAlarm.cfg</code>.
 - Instanciar valores válidos para as variáveis ambiente nesses arquivos renomeados.
 
@@ -28,6 +37,23 @@
 DJANGO_SECRET_KEY=from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())
 DATABASE_URL=URI do banco de dados postgresql no Heroku
 DJANGO_ALLOWED_HOSTS=lista de endereços que seu aplicativo web django pode servir
+=======
+- Alterar os nomes dos arquivos <code>sfn-project/.envs/.local/.django_example</code> e <code>sfn-project/configEmailAlarm.cfg_example</code>, para <code>.django</code> e <code>configEmailAlarm.cfg</code>.
+- Instanciar valores válidos para as variáveis ambiente nesses arquivos renomeados.
+
+```.django
+DJANGO_DEBUG=True
+DJANGO_SECRET_KEY=from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())
+DATABASE_URL= URI do banco de dados
+ALLOWED_HOSTS=lista de endereços que seu aplicativo web django pode servir
+
+HOST=endereço do banco de dados [sfn-project.config.settings.local]
+DATABASE=nome do banco de dados que será acessado [sfn-project.config.settings.local]
+USER=usuário para acesso ao banco de dados [sfn-project.config.settings.local]
+PORT=porta de acesso ao baco de dados [sfn-project.config.settings.local]
+PASSWORD=senha para acesso ao banco de dados[sfn-project.config.settings.local]
+```
+>>>>>>> main
 
 AWS_STORAGE_BUCKET_NAME=
 AWS_S3_REGION_NAME=
@@ -52,7 +78,10 @@ RECEIVER_EMAIL = username@gmail.com
 - <strong>Atenção</strong>: executar o interpretador python para realização dos testes com o Django no mesmo diretório que o arquivo <code>manage.py</code> e alterar a string <code>config.settings.production</code> para <code>config.settings.test</code>. Além disso, comentar todos os decorators do módulo <code>/coodesh_app/api_views.py</code>, pois nos casos de teste nenhuma autenticação é realizada.
 
 ### Useful commands 
-
+- <code>python3 sfn-project/manage.py createsuperuser</code>
+    - cria uma super user que permite que um token possa ser obtido ao executar uma requisição POST para a rota <code>api/token/</code> com os dados inseridos na criação.
+- <code>python3 sfn-project/manage.py collectstatic</code>
+    - coleta arquivos estáticos e armazenado no diretório correspondente a variável de configuração STATIC_ROOT.
 - <code>python manage.py runserver</code>
     - Inicializa a API com o Django.<p>
 - <code>python manage.py runscript main_psql</code>
@@ -103,6 +132,9 @@ RECEIVER_EMAIL = username@gmail.com
 `api/schema/swagger-ui/` - Swagger User Interface by [drf-spectacular](https://github.com/tfranzel/drf-spectacular)
 
 `api/schema/redoc/` - redoc by [drf-spectacular](https://github.com/tfranzel/drf-spectacular)
+
+
+`[DELETE]/test_articles/:id/` remove um article baseado no id do endereço da requisição HTTP DELETE e retorna uma resposta HTTP sem conteúdo e com status code 204. Também retorna um JSON, em caso de erro.
 
 
 ### About
