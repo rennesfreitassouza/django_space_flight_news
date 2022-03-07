@@ -1,10 +1,6 @@
 ## Django sfn-project 2022
 
-<<<<<<< HEAD
 [A 2a. solução](/) desenvolvida por mim para o desafio [2021 - Space Flight News](../README.md).
-=======
-[A 2a. solução](http://sfn-project.herokuapp.com/) desenvolvida por mim para o desafio [🏅 2021 - Space Flight News](../README.md).
->>>>>>> main
 
 
 ### Tecnologias utilizadas
@@ -13,11 +9,7 @@
 - [Framework Django](https://docs.djangoproject.com/en/4.0/)
 - [Django REST framework](https://www.django-rest-framework.org/)
 - [Cookiecutter](https://github.com/audreyfeldroy/cookiecutter-pypackage) para reestruturar o projeto Django. [Sobre](https://www.youtube.com/watch?v=RVLzZc3GUrk) esse módulo.
-<<<<<<< HEAD
 - Serviços de computação em nuvem: [Heroku](https://heroku.com), [Amazon S3](https://aws.amazon.com/s3/?nc1=h_ls) e [AWS IAM](https://aws.amazon.com/iam/?nc1=h_ls)
-=======
-- Serviços de computação em nuvem: [Heroku](https://heroku.com) e [Amazon EC2](https://aws.amazon.com/ec2/)
->>>>>>> main
 - [Heroku Advanced Scheduler](https://devcenter.heroku.com/articles/advanced-scheduler)
 - [Heroku Postgres](https://devcenter.heroku.com/categories/heroku-postgres)
 - [Spaceflight News API](https://api.spaceflightnewsapi.net/v3/documentation)
@@ -29,7 +21,6 @@
 - Utilizar as mesmas tecnologias ou semelhantes as que foram mencionadas no tópico acima.
 - Clonar [este repositório](https://lab.coodesh.com/rennesfrso/space-flight-news-20210823).
 - Criar um virtual environment e instalar os seguintes módulos com o comando <code>pip install -r sfn-project/requirements.txt</code>.
-<<<<<<< HEAD
 - Alterar os nomes dos arquivos <code>sfn-project/.envs/.production/.django_example</code> e <code>sfn-project/configEmailAlarm.cfg_example</code>, para <code>.django</code> e <code>configEmailAlarm.cfg</code>.
 - Instanciar valores válidos para as variáveis ambiente nesses arquivos renomeados.
 
@@ -37,23 +28,6 @@
 DJANGO_SECRET_KEY=from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())
 DATABASE_URL=URI do banco de dados postgresql no Heroku
 DJANGO_ALLOWED_HOSTS=lista de endereços que seu aplicativo web django pode servir
-=======
-- Alterar os nomes dos arquivos <code>sfn-project/.envs/.local/.django_example</code> e <code>sfn-project/configEmailAlarm.cfg_example</code>, para <code>.django</code> e <code>configEmailAlarm.cfg</code>.
-- Instanciar valores válidos para as variáveis ambiente nesses arquivos renomeados.
-
-```.django
-DJANGO_DEBUG=True
-DJANGO_SECRET_KEY=from django.core.management.utils import get_random_secret_key; print(get_random_secret_key())
-DATABASE_URL= URI do banco de dados
-ALLOWED_HOSTS=lista de endereços que seu aplicativo web django pode servir
-
-HOST=endereço do banco de dados [sfn-project.config.settings.local]
-DATABASE=nome do banco de dados que será acessado [sfn-project.config.settings.local]
-USER=usuário para acesso ao banco de dados [sfn-project.config.settings.local]
-PORT=porta de acesso ao baco de dados [sfn-project.config.settings.local]
-PASSWORD=senha para acesso ao banco de dados[sfn-project.config.settings.local]
-```
->>>>>>> main
 
 AWS_STORAGE_BUCKET_NAME=
 AWS_S3_REGION_NAME=
