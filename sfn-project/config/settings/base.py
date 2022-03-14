@@ -128,9 +128,9 @@ MIDDLEWARE = [
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(ROOT_DIR, "static") # ROOT_DIR / 'static'
-STATICFILES_DIRS = [
-    os.path.join(STATIC_ROOT, 'rest_framework')
-    ]
+
+    
+    
 
 # TEMPLATES
 # ------------------------------------------------------------------------------
@@ -163,4 +163,3 @@ SPECTACULAR_SETTINGS = {
     'VERSION': '2.0',
     # OTHER SETTINGS
 }
-
