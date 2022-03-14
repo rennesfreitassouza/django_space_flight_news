@@ -45,7 +45,7 @@ class SFNArticles(models.Model):
             else:
                 saved = True
         if saved is False:
-            return {'return': 'NOT saved!'}
+            raise Exception
         return {'return': 'Saved!', 'my_id': article.my_id}
 
     def set_article_data_pk_0(self, article):

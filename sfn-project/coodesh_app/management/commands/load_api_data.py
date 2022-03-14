@@ -44,7 +44,7 @@ class Command(BaseCommand):
                     article.featured = row['featured']
                     
                     try:
-                        article.save()
+                        article.set_article_data_pk_0(article)
                     except Exception as e:
                         raise UnknownExceptionNotify(__file__, e.args, notify=True)
 

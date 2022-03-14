@@ -52,6 +52,39 @@ RECEIVER_EMAIL = username@gmail.com
 - <strong>Atenção</strong>: executar o interpretador Python para iniciar a REST API com o Django no diretório que os arquivos <code>configEmailAlarm.cfg</code>, <code>ArticlesData.csv</code>, <code>EventsData.csv</code> e <code>LaunchesData.csv</code> estiverem armazenados.
 - <strong>Atenção</strong>: executar o interpretador python para realização dos testes com o Django no mesmo diretório que o arquivo <code>manage.py</code> e alterar a string <code>config.settings.production</code> para <code>config.settings.test</code>. Além disso, comentar todos os decorators do módulo <code>/coodesh_app/api_views.py</code>, pois nos casos de teste nenhuma autenticação é realizada.
 
+- Para execução local: <code>.read_dot_django</code> e <code>manage.py</code>
+
+```.read_dot_django
+DJANGO_READ_DOT_ENV_FILE=True
+ENVIRONMENT=.local
+```
+
+```.manage.py
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.local')
+```
+
+- Para execução de testes: <code>.read_dot_django</code> e <code>manage.py</code>
+
+```.read_dot_django
+DJANGO_READ_DOT_ENV_FILE=True
+ENVIRONMENT=.local
+```
+
+```.manage.py
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.test')
+```
+
+- Para execução em produção: <code>.read_dot_django</code> e <code>manage.py</code>
+
+```.read_dot_django
+DJANGO_READ_DOT_ENV_FILE=True
+ENVIRONMENT=.production
+```
+
+```.manage.py
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.production')
+```
+
 ### Useful commands 
 
 - <code>python manage.py runserver</code>
