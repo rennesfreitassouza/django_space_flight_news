@@ -1,7 +1,8 @@
 ## Django sfn-project 2022
 
-[A 2a. solução](/) desenvolvida por mim para o desafio [2021 - Space Flight News](../README.md).
+[A 2a. solução](http://sfn-project.herokuapp.com/) desenvolvida para o desafio [2021 - Space Flight News](../README.md).
 
+-----------------------------------------------------------------------------------------------------------------------------------------
 
 ### Tecnologias utilizadas
 
@@ -52,10 +53,7 @@ RECEIVER_EMAIL = username@gmail.com
 - <strong>Atenção</strong>: executar o interpretador python para realização dos testes com o Django no mesmo diretório que o arquivo <code>manage.py</code> e alterar a string <code>config.settings.production</code> para <code>config.settings.test</code>. Além disso, comentar todos os decorators do módulo <code>/coodesh_app/api_views.py</code>, pois nos casos de teste nenhuma autenticação é realizada.
 
 ### Useful commands 
-- <code>python3 sfn-project/manage.py createsuperuser</code>
-    - cria uma super user que permite que um token possa ser obtido ao executar uma requisição POST para a rota <code>api/token/</code> com os dados inseridos na criação.
-- <code>python3 sfn-project/manage.py collectstatic</code>
-    - coleta arquivos estáticos e armazenado no diretório correspondente a variável de configuração STATIC_ROOT.
+
 - <code>python manage.py runserver</code>
     - Inicializa a API com o Django.<p>
 - <code>python manage.py runscript main_psql</code>
@@ -106,9 +104,6 @@ RECEIVER_EMAIL = username@gmail.com
 `api/schema/swagger-ui/` - Swagger User Interface by [drf-spectacular](https://github.com/tfranzel/drf-spectacular)
 
 `api/schema/redoc/` - redoc by [drf-spectacular](https://github.com/tfranzel/drf-spectacular)
-
-
-`[DELETE]/test_articles/:id/` remove um article baseado no id do endereço da requisição HTTP DELETE e retorna uma resposta HTTP sem conteúdo e com status code 204. Também retorna um JSON, em caso de erro.
 
 
 ### About
