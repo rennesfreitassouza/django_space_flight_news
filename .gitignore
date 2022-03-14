@@ -142,10 +142,10 @@ dmypy.json
 static/
 
 # migrations folder
-# migrations/
+migrations/
 
 # scripts folder
-# scripts/
+scripts/
 
 # .csv files
 *.csv
@@ -158,3 +158,6 @@ configEmailAlarm.cfg
 
 # .ebextensions folder
 .ebextensions/
+
+# Environments variables
+.django
