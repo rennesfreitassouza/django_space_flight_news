@@ -3,23 +3,24 @@ from coodesh_app.src.exceptions import SFNArticlesDoesNotExistNotify
 # Create your models here.
 
 class Tmy_id:
-
+    """Tmy_id returns the latest id + 1  of a SFNArticles record.
+    """
     def get_latest_my_id(self):
         try:
             record = SFNArticles.objects.all().latest('my_id') 
         except SFNArticles.DoesNotExist as e:
-            msg = {'ERROR': 'NO RECORD RETRIEVED'}
-            SFNArticlesDoesNotExistNotify(__file__, e.args, msg, notify=False)
             response = 0
+            msg = (f'ERROR: NO RECORD RETRIEVED pk = {response}')
+            SFNArticlesDoesNotExistNotify(__file__, e.args, msg, notify=False)
         else:
-            msg = {'Ok': 'RECORD RETRIEVED. Generating new pk...'}
             response = record.my_id + 1
-        print(msg)
+            msg = (f'Ok: RECORD RETRIEVED. Generating new pk... = {response}')
+            print(msg)
         return response
 
 
 class SFNArticles(models.Model):
-    my_id = models.BigIntegerField(primary_key=True, default=Tmy_id().get_latest_my_id)
+    my_id = models.BigIntegerField(primary_key=True)
     api_id = models.IntegerField(unique=False)
     title = models.CharField(max_length=255)
     url = models.CharField(max_length=255)
@@ -35,30 +36,29 @@ class SFNArticles(models.Model):
     def set_article_data_pk_1(self, article):
         """deprecated"""
         saved = False
-        infite = 0
-        while(saved is False and infite < 120_125):
+        infinite = 0
+        while(saved is False and infinite < 120_125):
             try:
-                article.save()
+                article.save(force_insert=True)
+                msg = f'return: Saved! my_id: {article.my_id}'
             except:  # IntegrityError:
-                infite += 1
+                infinite += 1
                 article.my_id += 1
             else:
                 saved = True
         if saved is False:
+            print(f'Error: infinite max value exceeded: {infinite}')
             raise Exception
+        print(msg)
         return {'return': 'Saved!', 'my_id': article.my_id}
 
     def set_article_data_pk_0(self, article):
 
-        ref_query_set = SFNArticles.objects.all()
+        
 
-        last_ref_obj_pk = 0
-        if ref_query_set:
-            if ref_query_set.exists():
-                ref_obj = ref_query_set.last()
-                last_ref_obj_pk = ref_obj.my_id
+        last_ref_obj_pk = Tmy_id().get_latest_my_id()
 
-        article.my_id = last_ref_obj_pk + 1
+        article.my_id = last_ref_obj_pk
         return self.set_article_data_pk_1(article)
 
     def __repr__(self):

@@ -319,7 +319,7 @@ class SFNArticlesList(ListAPIView, CreateAPIView):
             new_query_dict.pop('article_launche_id')
             new_query_dict.pop('article_launche_id_provider')
         
-        new_query_dict['my_id'] = last_id
+        new_query_dict['my_id'] = last_id #
 
         return Response(data=new_query_dict)
 

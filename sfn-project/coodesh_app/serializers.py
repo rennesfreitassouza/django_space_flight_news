@@ -2,14 +2,14 @@ from importlib.metadata import requires
 from rest_framework import serializers
 from coodesh_app.models import SFNArticles,  SFNArticlesLaunches, SFNArticlesEvents
 from coodesh_app.management.commands.load_api_data import DATETIME_FORMAT
-
+from coodesh_app.models import Tmy_id 
 
 '''
     "In general, serializing means to convert an object into format like JSON, YAML or XML."
 '''
 
 class SFNArticlesSerializer(serializers.ModelSerializer):
-    my_id = serializers.IntegerField(read_only=True)
+    my_id = serializers.IntegerField(read_only=False, default=Tmy_id().get_latest_my_id())
     api_id = serializers.IntegerField(read_only=False)
     title = serializers.CharField(min_length=2, max_length=255)
     url = serializers.CharField(read_only=False)
