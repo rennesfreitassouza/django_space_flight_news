@@ -2,6 +2,10 @@ import csv
 import requests
 import json
 
+str_articlesdata_csv = 'ArticlesData.csv'
+str_launchesdata_csv = 'LaunchesData.csv'
+str_eventsdata_csv = 'EventsData.csv'
+
 
 def write_row_launches(csvWriter, article_my_id, article_api_id, data):
     for d in data:
@@ -18,7 +22,7 @@ def write_row_events(csvWriter, article_my_id, article_api_id, data):
 # Write data to a CSV file
 def writerSample(python_data):
 
-    with open("ArticlesData.csv", mode="w", encoding='utf-8', newline='') as csvfile1, open("LaunchesData.csv", mode="w", encoding='utf-8', newline='') as csvfile2, open("EventsData.csv", mode="w", encoding='utf-8', newline='') as csvfile3:
+    with open(str_articlesdata_csv, mode="w", encoding='utf-8', newline='') as csvfile1, open(str_launchesdata_csv, mode="w", encoding='utf-8', newline='') as csvfile2, open(str_eventsdata_csv, mode="w", encoding='utf-8', newline='') as csvfile3:
         # create a csv writers
         csvWriter = csv.writer(csvfile1)
         csvWriterLaunches = csv.writer(csvfile2)
@@ -48,6 +52,8 @@ def writerSample(python_data):
             csvWriter.writerow([my_id, data["id"], data["title"], data["url"], data["imageUrl"], data["newsSite"],
                                data["summary"], data["updatedAt"], data["publishedAt"], data["featured"], data["launches"], data["events"]])
             my_id += 1
+            if my_id >= 9_999: # hobby dev plan: 10_000
+                break
 
 
 def get_len(url):

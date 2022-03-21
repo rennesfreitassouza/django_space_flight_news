@@ -9,6 +9,7 @@ from coodesh_app.models import Tmy_id
 '''
 
 class SFNArticlesSerializer(serializers.ModelSerializer):
+    #my_id = serializers.IntegerField(read_only=True)
     my_id = serializers.IntegerField(read_only=False, default=Tmy_id().get_latest_my_id())
     api_id = serializers.IntegerField(read_only=False)
     title = serializers.CharField(min_length=2, max_length=255)

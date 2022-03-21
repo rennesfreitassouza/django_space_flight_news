@@ -9,6 +9,7 @@ class Tmy_id:
         try:
             record = SFNArticles.objects.all().latest('my_id') 
         except SFNArticles.DoesNotExist as e:
+            # need an improvement: an insert query)
             response = 0
             msg = (f'ERROR: NO RECORD RETRIEVED pk = {response}')
             SFNArticlesDoesNotExistNotify(__file__, e.args, msg, notify=False)

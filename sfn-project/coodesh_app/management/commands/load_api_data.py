@@ -5,20 +5,25 @@ from coodesh_app.models import SFNArticles, SFNArticlesLaunches, SFNArticlesEven
 from pytz import UTC
 import os
 from coodesh_app.src.exceptions import UnknownExceptionNotify, SFNArticlesDoesNotExistNotify
+from request_api_data import str_articlesdata_csv, str_launchesdata_csv, str_eventsdata_csv
+import traceback
 
 
 DATETIME_FORMAT = '%Y-%m-%dT%H:%M:%S'
 
 
 class Command(BaseCommand):
+
+
     # Show this when the user types help
-    help = "Loads data from ArticlesData.csv, LaunchesData.csv and EventsData.csv into database."
+    help = f"Loads data from {str_articlesdata_csv}, {str_launchesdata_csv} and {str_eventsdata_csv} into database."
 
     def handle(self, *args, **options):
 
         print("Loading data for tables [It does not update them]...")
         print("Current working directory: ", os.getcwd())
-        with open('ArticlesData.csv', encoding='utf-8') as csv_articles:
+
+        with open(str_articlesdata_csv, encoding='utf-8') as csv_articles:
             for row in DictReader(csv_articles):
 
                 articles = SFNArticles.objects.filter(my_id=row['my_id'], api_id=row['api_id'], title=row['title'],
@@ -44,19 +49,21 @@ class Command(BaseCommand):
                     article.featured = row['featured']
                     
                     try:
-                        article.set_article_data_pk_0(article)
+                        article.save()
                     except Exception as e:
-                        raise UnknownExceptionNotify(__file__, e.args, notify=True)
-
+                        raise UnknownExceptionNotify(__file__, e.args, traceback.format_exc(), notify=True)
+        print(f"{str_articlesdata_csv} data loaded!")
+        with open(str_articlesdata_csv, encoding='utf-8') as csv_articles:
+            for row in DictReader(csv_articles):
                 if row['launches'] == "NOT_EMPTY":
-                    with open('LaunchesData.csv', encoding='utf-8') as articlesLaunches:
+                    with open(str_launchesdata_csv, encoding='utf-8') as articlesLaunches:
                         for launches_row in DictReader(articlesLaunches):
                             if launches_row['article_my_id'] == row['my_id']:
                                 try:
                                     db_article = SFNArticles.objects.get(
                                         my_id=launches_row['article_my_id'])
                                 except SFNArticles.DoesNotExist as e:
-                                    raise SFNArticlesDoesNotExistNotify(__file__, e.args, notify=True)
+                                    raise SFNArticlesDoesNotExistNotify(__file__, e.args, traceback.format_exc(), notify=True)
                                 else:
                                     article_launche = SFNArticlesLaunches()
 
@@ -68,16 +75,18 @@ class Command(BaseCommand):
                                         article_launche.save()
                                     except Exception as e:
                                         raise UnknownExceptionNotify(__file__, e.args, notify=True)
-
+        print(f"{str_launchesdata_csv} data loaded!")
+        with open(str_articlesdata_csv, encoding='utf-8') as csv_articles:
+            for row in DictReader(csv_articles):
                 if row['events'] == "NOT_EMPTY":
-                    with open('EventsData.csv', encoding='utf-8') as articlesLaunches:
+                    with open(str_eventsdata_csv, encoding='utf-8') as articlesLaunches:
                         for launches_row in DictReader(articlesLaunches):
                             if launches_row['article_my_id'] == row['my_id']:
                                 try:
                                     db_article = SFNArticles.objects.get(
                                         my_id=launches_row['article_my_id'])
                                 except SFNArticles.DoesNotExist as e:
-                                    raise SFNArticlesDoesNotExistNotify(__file__, e.args, notify=True)
+                                    raise SFNArticlesDoesNotExistNotify(__file__, e.args, traceback.format_exc(), notify=True)
                                 else:
                                     article_event = SFNArticlesEvents()
 
@@ -87,6 +96,6 @@ class Command(BaseCommand):
                                     try:
                                         article_event.save()
                                     except Exception as e:
-                                        raise UnknownExceptionNotify(__file__, e.args, notify=True)
-
-        print("Load complete!")
+                                        raise UnknownExceptionNotify(__file__, e.args, traceback.format_exc(),notify=True)
+        print(f"{str_eventsdata_csv} data loaded!")
+        print("Data load complete!")
