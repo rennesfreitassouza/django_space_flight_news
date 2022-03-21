@@ -86,7 +86,8 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings.production')
 ```
 
 ### Useful commands 
-
+- <code>python manage.py create_superuser</code>
+    - Cria um novo superusuário para que um token JWT seja obtido da rota <code>api/schema/swagger-ui/</code><p>
 - <code>python manage.py runserver</code>
     - Inicializa a API com o Django.<p>
 - <code>python manage.py runscript main_psql</code>
