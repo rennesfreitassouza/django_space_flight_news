@@ -13,8 +13,7 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from coodesh_app.src.exceptions import UnknownExceptionNotify
 
-# articles/
-# articles/:my_id/
+
 class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     """deprecated"""
     queryset = SFNArticles.objects
@@ -88,7 +87,7 @@ class SFNArticlesRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
 
 
 @permission_classes([IsAuthenticated])
-# test_articles/:my_id/
+# articles/<int:my_id>/
 class SFNArticlesRetrieveUpdateDestroy_(RetrieveUpdateDestroyAPIView):
     queryset = SFNArticles.objects.all()
     lookup_field = 'my_id'
@@ -140,7 +139,7 @@ class SFNArticlesRetrieveUpdateDestroy_(RetrieveUpdateDestroyAPIView):
         article_launches.save()
 
 
-# test_articles/
+# articles/
 class SFNArticlesLaunchesAux():
     queryset = SFNArticlesLaunches.objects.all()
     serializer_class = SFNArticlesLaunchesSerializer
@@ -176,7 +175,7 @@ class SFNArticlesLaunchesAux():
         return new_query_dict
 
 
-# test_articles/
+# articles/
 class SFNArticlesPagination(LimitOffsetPagination):
     """SFNArticlesPagination inherits rest_framework LimitOffsetPagination class and overrides its paginate_queryset and get_offset methods.
 
@@ -236,7 +235,7 @@ class SFNArticlesPagination(LimitOffsetPagination):
 
 
 @permission_classes([IsAuthenticated])
-# test_articles/
+# articles/
 class SFNArticlesList(ListAPIView, CreateAPIView):
     queryset = SFNArticles.objects.all().order_by('my_id')
     serializer_class = SFNArticlesSerializer
